@@ -1,0 +1,83 @@
+* {
+    font-family: 'Press Start 2P', cursive;
+
+    margin: 0px;
+    
+}
+body{
+    background-image: url(../Multimedia/spaceStarBarkloop1000x600.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    display: block;
+
+}
+
+canvas{
+    background-color: #81B437;
+}
+header {
+    position: relative;
+    display: block;
+    padding: 0px;
+}
+
+header nav{
+    text-align: center;
+    background-color: #DD7D7D;
+    width: 100%;
+}
+
+.encabezadosElementos {
+    margin: 5px 10px;
+    padding: 10px 30px;
+    border-style: solid;
+    border-color: #464A44;
+    border-radius: 8%;
+    display: inline-block;
+
+    text-decoration: none;
+    text-align: center;
+    list-style: none;
+    background-color: #73D340;
+    color: #131412;
+}
+
+.encabezadosElementos:hover {
+    background-color: #AAE283;
+    color: #581845;
+    border-color: #000;
+
+
+}
+
+.conteiner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.game {
+     display: flex;
+     flex-direction: column;
+    
+}
+.canvasGame {
+    position: flex;
+    display: flex;
+    margin-top: 10%;
+    border: 1px solid black;
+}
+
+/* Por ahora lo de abajo es para eliminar los botones molestos del jeugo */
+.intButtons {
+    display: none;
+}
+.gameButton { 
+    display: none;
+}
