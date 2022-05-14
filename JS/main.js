@@ -54,17 +54,35 @@ while (coincidence == false) {
             coincidence = true;
             break;
         } else {
-            userSnakeChoice = prompt("Perfecto " + userNameInput + " bienvenido al 'Snake Game NFT'!\nAntes de iniciar el juego deberás elegir una 'Snake' desde tu portafolio de NFTs, o comprar una si aún no tienes ninguna!\nEscoge la opción de tu preferencia a continuación:\n\n1 - Seleccionar desde Portafolio.\n2 - Comprar una nueva desde Marketplace.");
+            userSnakeChoice = prompt(
+                `Perfecto ${userNameInput} bienvenido al 'Snake Game NFT'!
+                Antes de iniciar el juego deberás elegir una 'Snake' desde tu portafolio de NFTs, o comprar una si aún no tienes ninguna!
+                Escoge la opción de tu preferencia a continuación:
+                
+                1 - Seleccionar desde Portafolio.
+                2 - Comprar una nueva desde Marketplace.
+            `);
         }
     }
     if (int == 2) {
-        alert("Lo siento " + userNameInput + " se agotaron los intentos para seleccionar una opción.\n\nIntente jugar mañana!")
+        alert(
+            `Lo siento ${userNameInput} se agotaron los intentos para seleccionar una opción.
+            Intente jugar mañana!
+        `)
         coincidence = true;
     }
 }
 
 function selecUserSnake() {
-    let colorSnake = prompt("Hola de nuevo " + userNameInput + " selecciona una de tus 'Snake' de tu portafolio personal:\n\n1 - Snake Red\n2 - Snake Black \n3 - Snake Blue \n4 - Snake Green \n0 - Comprar otra 'Snake' nueva.");
+    let colorSnake = prompt(
+        `Hola de nuevo ${userNameInput} selecciona una de tus 'Snake' de tu portafolio personal:
+    
+        0 - Comprar otra 'Snake' nueva.
+        1 - Snake Red
+        2 - Snake Black 
+        3 - Snake Blue 
+        4 - Snake Green 
+    `);
 
     switch (colorSnake) {
         case '0':
