@@ -210,7 +210,7 @@ const movementKey = (e) => {
     } else if (e.code === "Enter") startGame();
     else return;
 }
-document.addEventListener('keyup', movementKey);
+document.addEventListener("keydown", movementKey);
 
 
 const ajustPosition = () => {
