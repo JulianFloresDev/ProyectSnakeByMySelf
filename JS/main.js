@@ -37,38 +37,38 @@ function startGame() {
 
 // Ingreso de datos para la seleccion de la serpiente a utilizar.
 
-let usuarioNombreIngresado = prompt("Bienvenido al Snake Game NFT!!!! \n¿Como quieres que se vea tu record en la tabla mundial?");
-let usuarioSnakeChoice = prompt("Perfecto " + usuarioNombreIngresado + " bienvenido al 'Snake Game NFT'!\nAntes de iniciar el juego deberás elegir una 'Snake' desde tu portafolio de NFTs, o comprar una si aún no tienes ninguna!\nEscoge la opción de tu preferencia a continuación:\n\n1 - Seleccionar desde Portafolio.\n2 - Comprar una nueva desde Marketplace.");
+let userNameInput = prompt("Bienvenido al Snake Game NFT!!!! \n¿Como quieres que se vea tu record en la tabla mundial?");
+let userSnakeChoice = prompt("Perfecto " + userNameInput + " bienvenido al 'Snake Game NFT'!\nAntes de iniciar el juego deberás elegir una 'Snake' desde tu portafolio de NFTs, o comprar una si aún no tienes ninguna!\nEscoge la opción de tu preferencia a continuación:\n\n1 - Seleccionar desde Portafolio.\n2 - Comprar una nueva desde Marketplace.");
 
 let snakeChoice = new Snake("#484848", 100, 3, false, false, "#484848"); //default snake.
 
-let datoIngresado = false;
-while (datoIngresado == false) {
-    for (intentos = 0; intentos < 2; intentos++) {
-        if (usuarioSnakeChoice == '1') {
-            seleccionarSnakeUsuario();
-            datoIngresado = true;
+let coincidence = false;
+while (coincidence == false) {
+    for (int = 0; int < 2; int++) {
+        if (userSnakeChoice == '1') {
+            selecUserSnake();
+            coincidence = true;
             break;
-        } else if (usuarioSnakeChoice == '2') {
-            comprarSnakeNueva();
-            datoIngresado = true;
+        } else if (userSnakeChoice == '2') {
+            buyNewSnake();
+            coincidence = true;
             break;
         } else {
-            usuarioSnakeChoice = prompt("Perfecto " + usuarioNombreIngresado + " bienvenido al 'Snake Game NFT'!\nAntes de iniciar el juego deberás elegir una 'Snake' desde tu portafolio de NFTs, o comprar una si aún no tienes ninguna!\nEscoge la opción de tu preferencia a continuación:\n\n1 - Seleccionar desde Portafolio.\n2 - Comprar una nueva desde Marketplace.");
+            userSnakeChoice = prompt("Perfecto " + userNameInput + " bienvenido al 'Snake Game NFT'!\nAntes de iniciar el juego deberás elegir una 'Snake' desde tu portafolio de NFTs, o comprar una si aún no tienes ninguna!\nEscoge la opción de tu preferencia a continuación:\n\n1 - Seleccionar desde Portafolio.\n2 - Comprar una nueva desde Marketplace.");
         }
     }
-    if (intentos == 2) {
-        alert("Lo siento " + usuarioNombreIngresado + " se agotaron los intentos para seleccionar una opción.\n\nIntente jugar mañana!")
-        datoIngresado = true;
+    if (int == 2) {
+        alert("Lo siento " + userNameInput + " se agotaron los intentos para seleccionar una opción.\n\nIntente jugar mañana!")
+        coincidence = true;
     }
 }
 
-function seleccionarSnakeUsuario() {
-    let colorSnake = prompt("Hola de nuevo " + usuarioNombreIngresado + " selecciona una de tus 'Snake' de tu portafolio personal:\n\n1 - Snake Red\n2 - Snake Black \n3 - Snake Blue \n4 - Snake Green \n0 - Comprar otra 'Snake' nueva.");
+function selecUserSnake() {
+    let colorSnake = prompt("Hola de nuevo " + userNameInput + " selecciona una de tus 'Snake' de tu portafolio personal:\n\n1 - Snake Red\n2 - Snake Black \n3 - Snake Blue \n4 - Snake Green \n0 - Comprar otra 'Snake' nueva.");
 
     switch (colorSnake) {
         case '0':
-            comprarSnakeNueva();
+            buyNewSnake();
             break;
         case '1':
             snakeChoice = new Snake("#D94945", 90, 3, true, false, "#D94945");
@@ -95,7 +95,7 @@ function seleccionarSnakeUsuario() {
     return snakeChoice
 }
 
-function comprarSnakeNueva() {
+function buyNewSnake() {
 
     snakeChoice = new Snake("#484848", 180, 3, false, false, "#484848");
     alert('Por le momento esta sección no está disponible.\nIgualmente podrá jugar con una versión clásica.\n\nMucha Suerte!!')
@@ -112,45 +112,45 @@ function comprarSnakeNueva() {
 
 //Uso del canvas para tomar datos y dibujar los elementos necesarios.
 
-let lienzo = document.getElementById("mainScreenPlay");
-let pincel = lienzo.getContext("2d");
+let canvas = document.getElementById("mainScreenPlay");
+let ctx = canvas.getContext("2d");
 
 const drawBorder = () => {
-    pincel.strokeStyle = "#6A6A6C";
-    pincel.beginPath();
-    pincel.moveTo(10, 10);
-    pincel.lineTo(490, 10);
-    pincel.lineTo(490, 490);
-    pincel.lineTo(10, 490);
-    pincel.lineTo(10, 10);
-    pincel.stroke();
-    pincel.closePath();
+    ctx.strokeStyle = "#6A6A6C";
+    ctx.beginPath();
+    ctx.moveTo(10, 10);
+    ctx.lineTo(490, 10);
+    ctx.lineTo(490, 490);
+    ctx.lineTo(10, 490);
+    ctx.lineTo(10, 10);
+    ctx.stroke();
+    ctx.closePath();
 }
 
 let clearCanva = () => {
-    pincel.clearRect(0, 0, 500, 500);
+    ctx.clearRect(0, 0, 500, 500);
     drawBorder();
 
 }
 
 const drawBox = (xi, yi, color, secondaryColor) => {
-    pincel.fillStyle = color;
-    pincel.beginPath();
-    pincel.moveTo(xi, yi);
-    pincel.lineTo((xi + 10), yi);
-    pincel.lineTo((xi + 10), (yi + 10));
-    pincel.lineTo(xi, (yi + 10));
-    pincel.fill();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(xi, yi);
+    ctx.lineTo((xi + 10), yi);
+    ctx.lineTo((xi + 10), (yi + 10));
+    ctx.lineTo(xi, (yi + 10));
+    ctx.fill();
 
-    pincel.strokeStyle = secondaryColor;
-    pincel.beginPath();
-    pincel.moveTo((xi - 1), (yi - 1));
-    pincel.lineTo(((xi - 1) + 10), (yi - 1));
-    pincel.lineTo(((xi - 1) + 10), ((yi - 1) + 10));
-    pincel.lineTo((xi - 1), ((yi - 1) + 10));
-    pincel.lineTo((xi - 1), (yi - 1));
-    pincel.stroke();
-    pincel.closePath();
+    ctx.strokeStyle = secondaryColor;
+    ctx.beginPath();
+    ctx.moveTo((xi - 1), (yi - 1));
+    ctx.lineTo(((xi - 1) + 10), (yi - 1));
+    ctx.lineTo(((xi - 1) + 10), ((yi - 1) + 10));
+    ctx.lineTo((xi - 1), ((yi - 1) + 10));
+    ctx.lineTo((xi - 1), (yi - 1));
+    ctx.stroke();
+    ctx.closePath();
 }
 
 const drawFood = () => {
@@ -234,8 +234,8 @@ const checkPosition = () => {
             if (bodySnake[i] != bodySnake[j]) {
                 if (bodySnake[i].posX == bodySnake[j].posX && bodySnake[i].posY == bodySnake[j].posY) {
 
-                    pincel.font = '38px Press Start 2P';
-                    pincel.fillText("Game over!!", 230, 250);
+                    ctx.font = '38px Press Start 2P';
+                    ctx.fillText("Game over!!", 230, 250);
                     clearInterval(gameInterval);
 
                     console.log("¡¡Game Over!! Press F5 for play again");
@@ -245,8 +245,8 @@ const checkPosition = () => {
     }
     //Verificamos que la cabeza de la serpiente no se encuentre fuera del margen del juego delimitado por esas posiciones
     if (bodySnake[0].posX < 10 || bodySnake[0].posX + 10 > 490 || bodySnake[0].posY < 10 || bodySnake[0].posY + 10 > 490) {
-        pincel.font = "30px Press Start";
-        pincel.fillText("Game over!!", 190, 250);
+        ctx.font = "30px Press Start";
+        ctx.fillText("Game over!!", 190, 250);
         clearInterval(gameInterval);
 
         console.log("¡¡Game Over!! Press F5 for play again");
@@ -258,7 +258,7 @@ const checkPosition = () => {
         food.x = Math.round(Math.random() * 47 + 1) * (10);
         food.y = Math.round(Math.random() * 47 + 1) * (10);
         drawFood();
-        console.log(usuarioNombreIngresado + " score: " + (snakeChoice.lenghtSnake - 3));
+        console.log(userNameInput + " score: " + (snakeChoice.lenghtSnake - 3));
 
     }
 }
