@@ -57,21 +57,21 @@ function startGame() {
 
 // Ingreso de datos para la seleccion de la serpiente a utilizar.
 
-const selectSnakeBtn = document.querySelector(".btn-selectSnake");
+const selectSnakeBtn = document.querySelector(".btn-selectSnake"),
 
-const buySnakeBtn = document.querySelector(".btn-buySnake");
+buySnakeBtn = document.querySelector(".btn-buySnake"),
 
-const startButton = document.querySelectorAll(".btn-startGame");
+startButton = document.querySelectorAll(".btn-startGame"),
 
-const scoreBtn = document.querySelector(".btn-showScore");
+scoreBtn = document.querySelector(".btn-showScore"),
 
-const divSnakeValues = document.querySelector(".snake-values");
+divSnakeValues = document.querySelector(".snake-values"),
 
-const startOptions = document.querySelector(".btn-start");
+startOptions = document.querySelector(".btn-start"),
 
-const divScoreTable = document.querySelector(".globalScore");
+divScoreTable = document.querySelector(".globalScore"),
 
-const score = document.querySelector(".score");
+score = document.querySelector(".score");
 
 selectSnakeBtn.addEventListener("click", () => {
     clearCanva();
