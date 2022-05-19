@@ -12,9 +12,9 @@
 <body>
     <header>
         <nav class="headerNav">
-            <a class="headerElements" href="#">Snake's Wallet</a>
-            <a class="headerElements" href="#">Marketplace</a>
-            <a class="headerElements" href="#">Global Score's</a>
+            <a class="headerElements btn-selectSnake" href="#">Snake's Wallet</a>
+            <a class="headerElements btn-buySnake" href="#">Marketplace</a>
+            <a class="headerElements btn-showScore" href="#">Global Score's</a>
         </nav>
     </header>
     <div class="conteiner">
@@ -33,9 +33,10 @@
         </div>
 
         <div class="btn-start">
-            <button class="gameButton btn-startGame">Start</button>
+            <input type="text" class="playerNameInput" required autofocus pattern="[A-Za-z]{4-20}">
             <button class="gameButton btn-selectSnake">Select Snake</button>
             <button class="gameButton btn-buySnake">Buy New Snake</button>
+            <button class="gameButton btn-startGame">Start</button>
         </div>
         <div class="game" hidden>
             <div class="canvasGame" id="canvasGameScreen">
@@ -50,8 +51,8 @@
                         <th>Score</th>
                     </tr>
                     <tr>
-                        <td>Player One</td>
-                        <td>9.999.999</td>
+                        <td class="playerName">Player One</td>
+                        <td class="number">9.999.999</td>
                     </tr>
                 </tbody>
             </table>
