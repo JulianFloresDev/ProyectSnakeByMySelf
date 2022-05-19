@@ -2,9 +2,10 @@
     font-family: 'Press Start 2P', cursive;
 
     margin: 0px;
-    
+
 }
-body{
+
+body {
     background-image: url(../Multimedia/spaceStarBarkloop1000x600.gif);
     background-repeat: no-repeat;
     background-position: center center;
@@ -18,22 +19,23 @@ body{
 
 }
 
-canvas{
+canvas {
     background-color: #81B437;
 }
+
 header {
     position: relative;
     display: block;
     padding: 0px;
 }
 
-header nav{
+header nav {
     text-align: center;
     background-color: #DD7D7D;
     width: 100%;
 }
 
-.encabezadosElementos {
+.headerElements {
     margin: 5px 10px;
     padding: 10px 30px;
     border-style: solid;
@@ -48,7 +50,7 @@ header nav{
     color: #131412;
 }
 
-.encabezadosElementos:hover {
+.headerElements:hover {
     background-color: #AAE283;
     color: #581845;
     border-color: #000;
@@ -56,17 +58,50 @@ header nav{
 
 }
 
-.conteiner{
+.conteiner {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 
 }
-.game {
-     display: flex;
-     flex-direction: column;
-    
+
+.score {
+    color: #73D340;
 }
+
+.conteiner .btn-start {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 30;
+    margin-top: 202px;
+}
+
+.conteiner .btn-start button {
+    width: 130px;
+    margin: 15px;
+    padding: 3px;
+    background-color: #acacac;
+    ;
+    border: 2px solid #0e0f23;
+    text-align: center;
+}
+
+.conteiner .btn-start button:hover {
+    width: 150px;
+    background-color: rgb(215, 194, 194);
+    border: 4px solid rgb(64, 94, 49);
+}
+
+.game {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
 .canvasGame {
     position: flex;
     display: flex;
@@ -74,10 +109,27 @@ header nav{
     border: 1px solid black;
 }
 
-/* Por ahora lo de abajo es para eliminar los botones molestos del jeugo */
-.intButtons {
-    display: none;
+.globalScore {
+    display: inline-block;
+    position: absolute;
+    z-index: 40;
+    top: 0;
+    right: 0;
+
 }
-.gameButton { 
-    display: none;
+
+table {
+    /* border-collapse: collapse; */
+    width: 100%;
+    color: #D2F7E9;
+}
+
+td th {
+    padding: 8px;
+}
+
+.globalScore {
+    border: 1px solid #000;
+    display: flex;
+    margin-left: auto;
 }
