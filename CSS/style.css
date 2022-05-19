@@ -75,24 +75,33 @@ header nav {
 
 .snake-values {
     display: none;
-    background-color: #b6c9ad;
-    width: 25%;
-    height: 350px;
+    background-color: #81B437;
+    width: 490px;
+    height: 490px;
     border: 6px double #000;
 
+    margin-top: 40px;
+
     position: absolute;
+    display: none;
+    flex-direction: column;
+    z-index: 15;
+
+    /* position: absolute;
     margin-top: 40px;
     top: auto;
     bottom: auto;
-    left: 1%;
+    left: 1%; */
 
-    
+
 }
 
-.snake-values ul{
-
-    text-align: center;
-
+.playerNameInput {
+    width: 130px;
+    margin: 10px;
+    background-color: #acacac;
+    color: #141414;
+    text
 }
 
 .conteiner .btn-start {
@@ -135,21 +144,26 @@ button:hover {
 }
 
 .globalScore {
-    display: inline-block;
+    display: none;
     position: absolute;
     z-index: 40;
     top: 40px;
     right: 1%;
 
-    width: 28%;
-
-}
-
-.globalScore {
     border: 4px double #000;
-    display: flex;
+    width: 28%;
     margin-left: auto;
+
 }
+
+.globalScore .playerName {
+    text-align: left;
+}
+
+.globalScore .number {
+    text-align: center;
+}
+
 
 table {
     /* border-collapse: collapse; */
