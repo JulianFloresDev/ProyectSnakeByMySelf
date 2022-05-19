@@ -29,6 +29,9 @@ let food = {
     y: Math.round(Math.random() * 47 + 1) * (10),
 }
 
+snakeChoice = new Snake("#0F0E0E", 105, 4, true, false, "#DCE85B");
+
+
 function startGame() {
 
     clearCanva();
@@ -42,10 +45,12 @@ function startGame() {
 
     gameInterval = setInterval(gameLoop, snakeChoice.speed);
 
-    bodySnake.unshift(new SnakeCell(40, 10, movement.RIGHT));
-    bodySnake.push(new SnakeCell(30, 10, movement.RIGHT));
-    bodySnake.push(new SnakeCell(20, 10, movement.RIGHT));
-    bodySnake.push(new SnakeCell(10, 10, movement.RIGHT));
+    bodySnake.unshift(new SnakeCell((snakeChoice.lenghtSnake * 10), 10, movement.RIGHT));
+    for (let i = 1; i < snakeChoice.lenghtSnake; i++) {
+        bodySnake.push(new SnakeCell((snakeChoice.lenghtSnake - i) * 10, 10, movement.RIGHT));
+    }
+    // bodySnake.push(new SnakeCell(20, 10, movement.RIGHT));
+    // bodySnake.push(new SnakeCell(10, 10, movement.RIGHT));
 }
 
 //__________________________________________________________________________________________________________________________________________//
@@ -64,24 +69,22 @@ const score = document.querySelector(".score");
 
 const startOptions = document.querySelector(".btn-start");
 
-selectSnakeBtn.addEventListener("click", () =>{
+selectSnakeBtn.addEventListener("click", () => {
+    clearCanva();
     divSnakeValues.style.display = "inline-block";
 })
 
 for (const btn of startButton) {
 
     btn.addEventListener('click', () => {
+        clearCanva();
         startOptions.style.display = 'none';
         divSnakeValues.style.display = 'none';
         //En new los datos de la serpiente tienen que ser los ingresados por el panel lateral que tengo que agregar.
 
-        startGame();
+        drawInstructions();
     });
 }
-
-
-snakeChoice = new Snake("#0F0E0E", 105, 3, true, false, "#DCE85B");
-
 
 
 //snakeChoice = new Snake("#D94945", 90, 3, true, false, "#D94945");    Roja
@@ -114,6 +117,15 @@ const drawBorder = () => {
     ctx.lineTo(10, 10);
     ctx.stroke();
     ctx.closePath();
+}
+drawBorder();
+
+const drawInstructions = () =>{
+    drawBorder();
+    ctx.font = "20px Press Start";
+    ctx.fillText(`Hello Human!! Welcome to Snake Game...`, 90, 100);
+    ctx.fillText(`Use arrow's key to move the Snake`, 110, 140);
+    ctx.fillText(`Press 'intro' to Start...`, 170, 270 );
 }
 
 let clearCanva = () => {
@@ -178,8 +190,11 @@ const movementKey = (e) => {
         bodySnake[0].vectorMov = movement.LEFT;
     } else if (e.code === "ArrowRight" && bodySnake[0].vectorMov !== movement.LEFT) {
         bodySnake[0].vectorMov = movement.RIGHT;
-    } else if (e.code === "Enter") startGame();
-    else return;
+    } else if (e.code === "Enter") {
+        startOptions.style.display = 'none';
+        divSnakeValues.style.display = 'none';
+        startGame();
+    } else return;
 }
 document.addEventListener("keydown", movementKey);
 
@@ -217,7 +232,7 @@ const ajustPosition = () => {
 //Condiciones de finalización y continuidad del juego.
 
 const ajustScore = () => {
-    let result = (snakeChoice.lenghtSnake - 3);
+    let result = (bodySnake.length - snakeChoice.lenghtSnake);
 
     let h3 = document.querySelector(".score h3")
     h3.remove();
@@ -230,11 +245,15 @@ const ajustScore = () => {
 const endGame = () => {
     ctx.font = "30px Press Start";
     ctx.fillText("Game over!!", 170, 68);
-    ctx.fillText(`Score: ${snakeChoice.lenghtSnake - 3}`, 190, 110);
+    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 190, 110);
 
     clearInterval(gameInterval);
 
     startOptions.style.display = 'flex';
+
+    if(snakeChoice.owner == "true"){
+
+    }
 }
 
 const checkPosition = () => {
@@ -260,7 +279,7 @@ const checkPosition = () => {
     }
     //Verificamos si la cabeza de la serpiente coincide con la posicion de la comida; en caso de que coincidan aumentamos la longitud de la serpiente, y redefinimos una nueva posicion para la serpiente
     if (bodySnake[0].posX == food.x && bodySnake[0].posY == food.y) {
-        snakeChoice.lenghtSnake++;
+
         bodySnake.push(new SnakeCell(500, 500, movement.DOWN));
         food.x = Math.round(Math.random() * 47 + 1) * (10);
         food.y = Math.round(Math.random() * 47 + 1) * (10);
