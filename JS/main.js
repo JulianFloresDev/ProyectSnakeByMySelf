@@ -51,16 +51,28 @@ function startGame() {
 //__________________________________________________________________________________________________________________________________________//
 
 // Ingreso de datos para la seleccion de la serpiente a utilizar.
+
+const selectSnakeBtn = document.querySelector(".btn-selectSnake");
+
+const buySnakeBtn = document.querySelector(".btn-buySnake")
+
+const startButton = document.querySelectorAll(".btn-startGame");
+
+const divSnakeValues = document.querySelector(".snake-values");
+
 const score = document.querySelector(".score");
 
 const startOptions = document.querySelector(".btn-start");
 
-const startButton = document.querySelectorAll(".btn-startGame");
+selectSnakeBtn.addEventListener("click", () =>{
+    divSnakeValues.style.display = "inline-block";
+})
 
 for (const btn of startButton) {
 
     btn.addEventListener('click', () => {
         startOptions.style.display = 'none';
+        divSnakeValues.style.display = 'none';
         //En new los datos de la serpiente tienen que ser los ingresados por el panel lateral que tengo que agregar.
 
         startGame();
@@ -217,10 +229,12 @@ const ajustScore = () => {
 
 const endGame = () => {
     ctx.font = "30px Press Start";
-    ctx.fillText("Game over!!", 190, 250);
-    ctx.fillText(`Score: ${snakeChoice.lenghtSnake - 3}`, 210, 300);
+    ctx.fillText("Game over!!", 170, 68);
+    ctx.fillText(`Score: ${snakeChoice.lenghtSnake - 3}`, 190, 110);
 
     clearInterval(gameInterval);
+
+    startOptions.style.display = 'flex';
 }
 
 const checkPosition = () => {
