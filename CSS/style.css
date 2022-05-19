@@ -73,6 +73,7 @@ header nav {
 }
 
 .snake-values {
+    display: none;
     background-color: #b6c9ad;
     width: 25%;
     height: 350px;
@@ -141,6 +142,7 @@ button:hover {
     display: flex;
     margin-left: auto;
 }
+
 table {
     /* border-collapse: collapse; */
     width: 100%;
