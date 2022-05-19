@@ -8,9 +8,9 @@ const movement = {
     RIGHT: 4,
 }
 class Snake {
-    constructor(color, usuarioVelocidad, lenghtSnake, usuarioSnake, skin, secondaryColor) {
+    constructor(color, userSpeed, lenghtSnake, usuarioSnake, skin, secondaryColor) {
         this.color = color;
-        this.velocidad = usuarioVelocidad;
+        this.speed = userSpeed;
         this.lenghtSnake = lenghtSnake;
         this.owner = usuarioSnake;
         this.skin = skin;
@@ -30,11 +30,22 @@ let food = {
 }
 
 function startGame() {
-    gameInterval = setInterval(gameLoop, snakeChoice.velocidad);
 
-    bodySnake.unshift(new SnakeCell(250, 20, movement.DOWN));
-    bodySnake.push(new SnakeCell(250, 10, movement.DOWN));
-    bodySnake.push(new SnakeCell(250, 0, movement.DOWN));
+    clearCanva();
+    clearInterval(gameInterval);
+    if (bodySnake.length > 0) {
+        let maxCells = bodySnake.length;
+        for (let i = 0; i < maxCells; i++) {
+            bodySnake.pop();
+        }
+    }
+
+    gameInterval = setInterval(gameLoop, snakeChoice.speed);
+
+    bodySnake.unshift(new SnakeCell(40, 10, movement.RIGHT));
+    bodySnake.push(new SnakeCell(30, 10, movement.RIGHT));
+    bodySnake.push(new SnakeCell(20, 10, movement.RIGHT));
+    bodySnake.push(new SnakeCell(10, 10, movement.RIGHT));
 }
 
 //__________________________________________________________________________________________________________________________________________//
@@ -42,30 +53,33 @@ function startGame() {
 // Ingreso de datos para la seleccion de la serpiente a utilizar.
 const score = document.querySelector(".score");
 
-const startButton = document.querySelector("#btn-startGame");
-
 const startOptions = document.querySelector(".btn-start");
 
-startButton.addEventListener('click', () => {
-    startOptions.style.display = 'none';
-    //En new los datos de la serpiente tienen que ser los ingresados por el panel lateral que tengo que agregar.
+const startButton = document.querySelectorAll(".btn-startGame");
 
-    startGame();
-});
+for (const btn of startButton) {
+
+    btn.addEventListener('click', () => {
+        startOptions.style.display = 'none';
+        //En new los datos de la serpiente tienen que ser los ingresados por el panel lateral que tengo que agregar.
+
+        startGame();
+    });
+}
 
 
-snakeChoice = new Snake("#0F0E0E", 120, 3, true, false, "#DCE85B");
+snakeChoice = new Snake("#0F0E0E", 105, 3, true, false, "#DCE85B");
 
 
 
-//snakeChoice = new Snake("#D94945", 90, 3, true, false, "#D94945")
-//snakeChoice = new Snake("#0F0E0E", 120, 3, true, false, "#DCE85B");
+//snakeChoice = new Snake("#D94945", 90, 3, true, false, "#D94945");    Roja
+//snakeChoice = new Snake("#0F0E0E", 120, 3, true, false, "#DCE85B");   Negra
 
-//snakeChoice = new Snake("#4D86B6", 60, 3, true, false, "#0F0E0E");
+//snakeChoice = new Snake("#4D86B6", 60, 3, true, false, "#0F0E0E");    Azul
 
-//snakeChoice = new Snake("#2A662B", (1000 / 15), 3, true, false, "#79820B");
+//snakeChoice = new Snake("#2A662B", (1000 / 15), 3, true, false, "#79820B");   Verde
 
-//snakeChoice = new Snake("#484848", 75, 3, false, false, "#484848");
+//snakeChoice = new Snake("#484848", 75, 3, false, false, "#484848");   Gris
 
 
 
@@ -227,7 +241,7 @@ const checkPosition = () => {
     if (bodySnake[0].posX < 10 || bodySnake[0].posX + 10 > 490 || bodySnake[0].posY < 10 || bodySnake[0].posY + 10 > 490) {
 
         endGame();
-        
+
         console.log("¡¡Game Over!! Press F5 for play again");
     }
     //Verificamos si la cabeza de la serpiente coincide con la posicion de la comida; en caso de que coincidan aumentamos la longitud de la serpiente, y redefinimos una nueva posicion para la serpiente
