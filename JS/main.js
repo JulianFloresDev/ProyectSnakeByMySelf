@@ -59,19 +59,39 @@ function startGame() {
 
 const selectSnakeBtn = document.querySelector(".btn-selectSnake");
 
-const buySnakeBtn = document.querySelector(".btn-buySnake")
+const buySnakeBtn = document.querySelector(".btn-buySnake");
 
 const startButton = document.querySelectorAll(".btn-startGame");
 
-const divSnakeValues = document.querySelector(".snake-values");
+const scoreBtn = document.querySelector(".btn-showScore");
 
-const score = document.querySelector(".score");
+const divSnakeValues = document.querySelector(".snake-values");
 
 const startOptions = document.querySelector(".btn-start");
 
+const divScoreTable = document.querySelector(".globalScore");
+
+const score = document.querySelector(".score");
+
 selectSnakeBtn.addEventListener("click", () => {
     clearCanva();
-    divSnakeValues.style.display = "inline-block";
+    divSnakeValues.style.display = "flex";
+    startOptions.style.display = 'none';
+
+})
+
+let btnScoreClicked = false;
+scoreBtn.addEventListener("click", () => {
+    switch (btnScoreClicked) {
+        case false: 
+            divScoreTable.style.display = "flex";
+            btnScoreClicked = true;
+            break;
+        case true:
+            divScoreTable.style.display = "none";
+            btnScoreClicked = false;
+            break;
+    }
 })
 
 for (const btn of startButton) {
@@ -120,12 +140,12 @@ const drawBorder = () => {
 }
 drawBorder();
 
-const drawInstructions = () =>{
+const drawInstructions = () => {
     drawBorder();
     ctx.font = "20px Press Start";
     ctx.fillText(`Hello Human!! Welcome to Snake Game...`, 90, 100);
     ctx.fillText(`Use arrow's key to move the Snake`, 110, 140);
-    ctx.fillText(`Press 'intro' to Start...`, 170, 270 );
+    ctx.fillText(`Press 'intro' to Start...`, 170, 270);
 }
 
 let clearCanva = () => {
@@ -251,7 +271,7 @@ const endGame = () => {
 
     startOptions.style.display = 'flex';
 
-    if(snakeChoice.owner == "true"){
+    if (snakeChoice.owner == "true") {
 
     }
 }
