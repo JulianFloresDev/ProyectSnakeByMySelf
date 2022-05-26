@@ -12,51 +12,68 @@
 <body>
     <header>
         <nav class="headerNav">
-            <a class="headerElements btn-selectSnake" href="#">Snake's Wallet</a>
-            <a class="headerElements btn-buySnake" href="#">Marketplace</a>
-            <a class="headerElements btn-showScore" href="#">Global Score's</a>
+            <ul>
+                <li>
+                    <a id="wallet" class="headerElements btn btn-selectSnake" href="#">Select Snake</a>
+                </li>
+                <li>
+                    <a class="headerElements btn btn-buySnake" href="#">Marketplace</a>
+                </li>
+                <li>
+                    <a class="headerElements btn btn-showScore" href="#">Global Score's</a>
+                </li>
+                <li class="btn-login">
+                    <button class="btn btn-singIn">Sing In</button>
+                    <button id="log-out" class="btn btn-logOut">Log Out</button>
+                </li>
+            </ul>
+
         </nav>
     </header>
+
+    <div class="sesionStart">
+        <label for="usernameInput" class="login login-labels">Username:</label>
+        <input id="usernameInput" type="text" class="login login-inputs" placeholder="Nickname or email">
+
+        <label for="passwordInput" class="login login-labels">Password:</label>
+        <input id="passwordInput" type="password" class="login login-inputs" placeholder="Numbers and letters only">
+
+        <div class="check-conteiner">
+            <input id="checkbox-remember" type="checkbox" class="login checked">
+            <label for="checkbox-remember" class="login login-labels label-remember">Remember</label>
+        </div>
+
+        <div class="invalid"></div>
+
+        <input id="login-button" type="button" value="Start Play" class="login btn btn-startGame">
+    </div>
+
     <div class="conteiner">
         <div class="score" id="score">
             <h3>Score: 0</h3>
         </div>
 
-        <div class="snake-values">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            <button class="gameButton btn-startGame">Start</button>
-            </ul>
-        </div>
-
-        <div class="btn-start">
-            <input type="text" class="playerNameInput" required autofocus pattern="[A-Za-z]{4-20}">
-            <button class="gameButton btn-selectSnake">Select Snake</button>
-            <button class="gameButton btn-buySnake">Buy New Snake</button>
-            <button class="gameButton btn-startGame">Start</button>
-        </div>
-        <div class="game" hidden>
+        <div class="game">
             <div class="canvasGame" id="canvasGameScreen">
                 <canvas id="mainScreenPlay" width="500" height="500"></canvas>
             </div>
         </div>
-        <div class="globalScore">
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Player</th>
-                        <th>Score</th>
-                    </tr>
-                    <tr>
-                        <td class="playerName">Player One</td>
-                        <td class="number">9.999.999</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+
+    </div>
+    <div class="globalScore">
+        <table>
+            <tbody>
+                <tr>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+                <tr>
+                    <td class="playerName">Player One</td>
+                    <td class="number">9.999.999</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <script defer src="./JS/main.js"></script>
 </body>
