@@ -4,6 +4,9 @@
     margin: 0px;
 
     list-style: none;
+
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -18,6 +21,7 @@ body {
     touch-action: none;
     display: block;
 
+    align-items: center;
 }
 
 canvas {
@@ -25,15 +29,60 @@ canvas {
 }
 
 header {
-    position: relative;
-    display: block;
-    padding: 0px;
+    position: sticky;
+    width: 100%;
+    display: flex;
 }
 
 header nav {
-    text-align: center;
     background-color: #DD7D7D;
     width: 100%;
+
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    position: relative;
+    height: 100%;
+    justify-content: center;
+}
+
+nav ul li {
+    display: flex;
+}
+
+.btn {
+    text-decoration: none;
+    list-style: none;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background-color: #73D340;
+    border-color: #464A44;
+    border-style: inset;
+
+    font-size: 18px;
+    color: #131412;
+    letter-spacing: 2px;
+
+    width: 180px;
+    margin: 15px;
+    padding: 3px;
+}
+
+.btn:hover {
+    background-color: #AAE283;
+    border-color: #464A44;
+    border-style: outset;
+
+    font-style: oblique;
+    color: #051a0f;
+    letter-spacing: 3px;
+
+    width: 210px;
 }
 
 .headerElements {
@@ -44,20 +93,70 @@ header nav {
 
     display: inline-block;
 
-    text-decoration: none;
-    text-align: center;
-    list-style: none;
-    background-color: #73D340;
-    color: #131412;
 }
 
-.headerElements:hover {
-    background-color: #AAE283;
-    color: #581845;
-    border-color: #000;
+.btn-login {
+    margin-left: auto;
 
+    right: 1%;
+}
+
+#log-out {
+    display: none;
+}
+
+.sesionStart {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #81B437;
+    width: 20%;
+    height: 250px;
+    border: 6px double #000;
+
+    margin-top: 40px;
+
+    margin-left: 40%;
+    position: relative;
+    flex-direction: column;
+
+    z-index: 20;
+}
+
+
+.login {
+    display: inline-block;
+    margin: 8px;
 
 }
+
+.login-inputs {
+    margin: 0% 4%;
+    border-radius: 0.625em;
+    border-style: outset;
+}
+
+.checked {
+    display: inline-block;
+    margin: 1% 2%;
+}
+
+.label-remember {
+    float: right;
+}
+
+
+
+
+#login-button {
+    background-color: rgb(14, 151, 82);
+    border: 1px solid;
+    -webkit-border-radius: .375em;
+    border-radius: 0.625em;
+
+}
+
 
 .conteiner {
     position: relative;
@@ -68,8 +167,10 @@ header nav {
 }
 
 .score {
+    margin-top: 4px;
     color: #73D340;
     position: absolute;
+    letter-spacing: 4px;
 
 }
 
@@ -83,17 +184,8 @@ header nav {
     margin-top: 40px;
 
     position: absolute;
-    display: none;
     flex-direction: column;
     z-index: 15;
-
-    /* position: absolute;
-    margin-top: 40px;
-    top: auto;
-    bottom: auto;
-    left: 1%; */
-
-
 }
 
 .playerNameInput {
@@ -101,38 +193,22 @@ header nav {
     margin: 10px;
     background-color: #acacac;
     color: #141414;
+
 }
 
-.conteiner .btn-start {
+/* .conteiner .div-start {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 30;
     margin-top: 181px;
-}
-
-button {
-    width: 130px;
-    margin: 15px;
-    padding: 3px;
-    background-color: #acacac;
-    ;
-    border: 2px solid #0e0f23;
-    text-align: center;
-}
-
-button:hover {
-    width: 150px;
-    background-color: rgb(215, 194, 194);
-    border: 4px solid rgb(64, 94, 49);
-}
+} */
 
 .game {
     position: absolute;
     display: flex;
     flex-direction: column;
-    z-index: 10;
 }
 
 .canvasGame {
