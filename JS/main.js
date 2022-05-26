@@ -254,7 +254,7 @@ const drawInstructions = () => {
     ctx.textAlign = "center";
     ctx.fillText(`Hello ${inputUsername.value}!! Welcome to Snake Game...`, 250, 100);
     ctx.fillText(`Use arrow's key to move the Snake`, 250, 230);
-    ctx.fillText(`Press 'intro' to Start...`, 250, 270);
+    ctx.fillText(`Press 'Enter' to Start...`, 250, 270);
     ctx.fillText(`Sing In or Registrate for get Full Acces`, 250, 435);
     ctx.fillText(`to Marketplace and Diferents Snakes`, 250, 470);
 }
@@ -383,7 +383,7 @@ const endGame = () => {
     ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 110);
 
     ctx.fillStyle = "#404150";
-    ctx.fillText(`Press 'intro' to Re-Play...`, 250, 430);
+    ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
     ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
 
 
