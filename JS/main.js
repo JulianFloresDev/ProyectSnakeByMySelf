@@ -44,12 +44,15 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 //__________________________________________________________________________________________________________________________________________//
 const userRegistration = [];
 
+const snakeColecction = [];
+
 class Player {
-    constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction) {
+    constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
         this.usernameLogIn = usernameLogIn;
         this.passwordLogIn = passwordLogIn;
         this.cardRegistered = cardRegistered;
         this.snakeColecction = snakeColecction;
+        this.maxScore = maxScore;
     }
 };
 
@@ -59,11 +62,17 @@ singInBtn.addEventListener("click", () => {
     logOutBtn.style.display = "none";
 });
 
-const displayGame = () =>{
+const displayGame = () => {
     sesionStartOptions.style.display = "none";
     singInBtn.style.display = "none";
     logOutBtn.style.display = "flex";
     gameConteiner.style.display = "flex";
+
+
+    headerElementsBtn.forEach(element => {
+        //Cada elemento del Header oculto se muestra con display "inline-block"
+        element.style.display = "inline-block";
+    });
 }
 
 const userInputVerification = () => {
@@ -77,9 +86,18 @@ const userInputVerification = () => {
             </p>`;
 
     } else {
+        
+        userRegisterVerification(inputUsername.value, inputPassword.value);
+
+        let player = new Player(inputUsername.value, inputPassword.value, null, false)
         displayGame();
+        console.log(player);
     }
 };
+
+const userRegisterVerification = (user, pasword) =>{
+
+}
 
 
 startPlayBtn.addEventListener("click", () => {
@@ -90,9 +108,9 @@ startPlayBtn.addEventListener("click", () => {
 for (const btn of headerElementsBtn) {
     btn.addEventListener("click", () => {
         if (condition) {
-            
+
         } else {
-            
+
         }
     })
 }
@@ -102,7 +120,6 @@ for (const btn of headerElementsBtn) {
 
 // Ingreso de datos para la seleccion de la serpiente a utilizar.
 
-const snakeColecction = [];
 
 //Para cada boton de los seleccionados con querySelectorAll le damos la opción de ocultar las opciones iniciales y mostrar el div de selección.
 for (const btn of selectSnakeBtn) {
@@ -128,27 +145,6 @@ scoreBtn.addEventListener("click", () => {
     }
 });
 
-
-
-//Para cada boton de los seleccionados con querySelectorAll le damos la opción de ocultar las opciones iniciales y mostrar
-// for (const btn of startButton) {
-//     btn.addEventListener('click', () => {
-
-//         userInputVerification();
-
-//         sesionStartOptions.style.display = 'none';
-//         singInBtn.style.display = 'none';
-
-//         score.innerHTML = `<h3>Score: 0</h3>`;
-//         clearCanva();
-
-//         displayStartOptions();
-
-//         //En new los datos de la serpiente tienen que ser los ingresados por el panel lateral que tengo que agregar.
-
-//         
-//     });
-// };
 
 
 
@@ -253,12 +249,14 @@ drawBorder();
 
 const drawInstructions = () => {
     drawBorder();
-    ctx.font = "20px Press Start";
-    ctx.fillText(`Hello Human!! Welcome to Snake Game...`, 90, 100);
-    ctx.fillText(`Use arrow's key to move the Snake`, 110, 140);
-    ctx.fillText(`Press 'intro' to Start...`, 170, 270);
-    ctx.fillText(`Sing In or Registrate for get Full Acces`, 90, 330);
-    ctx.fillText(`to Marketplace and Diferents Snakes`, 95, 360);
+    ctx.fillStyle = "#181821";
+    ctx.font = "27px Press Start";
+    ctx.textAlign = "center";
+    ctx.fillText(`Hello ${inputUsername.value}!! Welcome to Snake Game...`, 250, 100);
+    ctx.fillText(`Use arrow's key to move the Snake`, 250, 230);
+    ctx.fillText(`Press 'intro' to Start...`, 250, 270);
+    ctx.fillText(`Sing In or Registrate for get Full Acces`, 250, 435);
+    ctx.fillText(`to Marketplace and Diferents Snakes`, 250, 470);
 }
 
 drawInstructions();
@@ -326,7 +324,7 @@ const movementKey = (e) => {
     } else if (e.code === "ArrowRight" && bodySnake[0].vectorMov !== movement.LEFT) {
         bodySnake[0].vectorMov = movement.RIGHT;
     } else if (e.code === "Enter") {
-        if(gameConteiner.style.display != "none"){
+        if (gameConteiner.style.display != "none") {
 
             startGame();
         }
@@ -379,9 +377,15 @@ const ajustScore = () => {
 }
 
 const endGame = () => {
+    ctx.textAlign = "center";
     ctx.font = "30px Press Start";
-    ctx.fillText("Game over!!", 170, 68);
-    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 190, 110);
+    ctx.fillText("Game over!!", 250, 68);
+    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 110);
+
+    ctx.fillStyle = "#404150";
+    ctx.fillText(`Press 'intro' to Re-Play...`, 250, 430);
+    ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
+
 
     clearInterval(gameInterval);
 
