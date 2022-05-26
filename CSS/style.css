@@ -90,8 +90,8 @@ nav ul li {
     padding: 10px 30px;
     border-style: solid;
     border-color: #464A44;
-
-    display: inline-block;
+    
+    display: none; /* Los botones de funcionalidad para usuarios registrados quedan ocultos */
 
 }
 
