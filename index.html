@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="./CSS/style.css">
     <link rel="icon" href="./Multimedia/Imagenes/icon.png">
     <title>Snake Game NFT</title>
@@ -24,29 +29,38 @@
                     <a class="headerElements btn btn-showScore" href="#">Global Score's</a>
                 </li>
                 <li class="btn-login">
-                    <button class="btn btn-singIn">Sing In</button>
+                    <button class="btn btn-enterGame">Enter Game</button>
                     <button id="log-out" class="btn btn-logOut">Log Out</button>
                 </li>
             </ul>
 
         </nav>
     </header>
+    <div class="conteiner-sesionStart">
+        <div class="sesionStart">
+            <label for="usernameInput" class="login login-labels">Username:</label>
+            <input id="usernameInput" type="text" class="login login-inputs" placeholder="Nickname or email">
 
-    <div class="sesionStart">
-        <label for="usernameInput" class="login login-labels">Username:</label>
-        <input id="usernameInput" type="text" class="login login-inputs" placeholder="Nickname or email">
+            <label for="passwordInput" class="login login-labels">Password:</label>
+            <input id="passwordInput" type="password" class="login login-inputs" placeholder="Numbers and letters only">
 
-        <label for="passwordInput" class="login login-labels">Password:</label>
-        <input id="passwordInput" type="password" class="login login-inputs" placeholder="Numbers and letters only">
+            <div class="check-conteiner">
 
-        <div class="check-conteiner">
-            <input id="checkbox-remember" type="checkbox" class="login checked">
-            <label for="checkbox-remember" class="login login-labels label-remember">Remember</label>
+                <input id="checkbox-remember" type="checkbox" class="login checkbox">
+
+                <label id="" for="checkbox-remember" class="login login-labels label-remember">Remember</label>
+
+            </div>
+
+            <div class="invalid"></div>
+
+            <input id="login-button" type="button" value="Start Play" class="login btn btn-startGame">
+
+            <div class="conteiner-singUp">
+                <p>Or...</p>
+                <button class="btn btn-singUp">Sing Up</button>
+            </div>
         </div>
-
-        <div class="invalid"></div>
-
-        <input id="login-button" type="button" value="Start Play" class="login btn btn-startGame">
     </div>
 
     <div class="conteiner">
