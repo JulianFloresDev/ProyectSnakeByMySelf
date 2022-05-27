@@ -17,15 +17,17 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     score = document.querySelector(".score"),
 
-    singInBtn = document.querySelector(".btn-singIn"),
+    singInBtn = document.querySelector(".btn-enterGame"),
 
     divInvalid = document.querySelector(".invalid"),
 
     startPlayBtn = document.querySelector(".btn-startGame"),
 
+    singUpBtn = document.querySelector(".btn-singUp"),
+
     logOutBtn = document.querySelector(".btn-logOut"),
 
-    sesionStartOptions = document.querySelector(".sesionStart"),
+    sesionStartOptions = document.querySelector(".conteiner-sesionStart"),
 
     inputUsername = document.querySelector("#usernameInput"),
 
@@ -42,7 +44,9 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
 //                                       Inicio de Sesión y Registro del Usuario
 //__________________________________________________________________________________________________________________________________________//
-const userRegistration = [];
+let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || []
+//Usar find para el array
+
 
 const snakeColecction = [];
 
@@ -60,7 +64,9 @@ singInBtn.addEventListener("click", () => {
     sesionStartOptions.style.display = "flex";
     gameConteiner.style.display = "none";
     logOutBtn.style.display = "none";
+
 });
+
 
 const displayGame = () => {
     sesionStartOptions.style.display = "none";
@@ -75,6 +81,8 @@ const displayGame = () => {
     });
 }
 
+
+//Jueves terminé en esta linea. Falta agregar un Sing In y un Sing Up para diferenciar usuarios nuevos de ya ingresados
 const userInputVerification = () => {
     if (inputUsername.value == "" || inputPassword.value == "") {
 
@@ -86,7 +94,7 @@ const userInputVerification = () => {
             </p>`;
 
     } else {
-        
+
         userRegisterVerification(inputUsername.value, inputPassword.value);
 
         let player = new Player(inputUsername.value, inputPassword.value, null, false)
@@ -95,13 +103,15 @@ const userInputVerification = () => {
     }
 };
 
-const userRegisterVerification = (user, pasword) =>{
-
+const userRegisterVerification = (user, pasword) => {
+    let exist = usersDataBase.some((element) => element.usernameLogIn === element)
 }
 
 
 startPlayBtn.addEventListener("click", () => {
     userInputVerification();
+    usersDataBase.push(player)
+    localStorage.setItem("usersDataBase", JSON.stringify(usersDataBase));
     //Guardar ingreso del usuario y ejecutar funcion de comprobacion de datos
 })
 
@@ -249,8 +259,8 @@ drawBorder();
 
 const drawInstructions = () => {
     drawBorder();
-    ctx.fillStyle = "#181821";
-    ctx.font = "27px Press Start";
+    ctx.fillStyle = "#000";
+    ctx.font = "27px Righteous";
     ctx.textAlign = "center";
     ctx.fillText(`Hello ${inputUsername.value}!! Welcome to Snake Game...`, 250, 100);
     ctx.fillText(`Use arrow's key to move the Snake`, 250, 230);
@@ -378,11 +388,11 @@ const ajustScore = () => {
 
 const endGame = () => {
     ctx.textAlign = "center";
-    ctx.font = "30px Press Start";
+    ctx.font = "30px Righteous";
     ctx.fillText("Game over!!", 250, 68);
     ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 110);
 
-    ctx.fillStyle = "#404150";
+    ctx.fillStyle = "#000";
     ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
     ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
 
