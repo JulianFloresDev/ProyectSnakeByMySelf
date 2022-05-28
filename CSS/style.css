@@ -159,6 +159,10 @@ nav ul li {
     align-items: center;
 }
 
+.btn-singUp{
+    display: none;
+}
+
 #login-button {
     background-color: rgb(14, 151, 82);
     border: 1px solid;
