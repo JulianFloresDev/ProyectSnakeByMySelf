@@ -84,21 +84,14 @@ let snakeChoice = new Snake("Default Snake", "#0F0E0E", 105, 4, false, false, "#
 //                                       Inicio de Sesión y Registro del Usuario
 //__________________________________________________________________________________________________________________________________________//
 
-let player;
+let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, null, null);
+console.log(player);
 
 const saveNewData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
 let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
-
-singInBtn.addEventListener("click", () => {
-    sesionStartOptions.style.display = "flex";
-    gameConteiner.style.display = "none";
-    logOutBtn.style.display = "none";
-
-});
-
 
 const displayGame = () => {
     sesionStartOptions.style.display = "none";
@@ -114,27 +107,61 @@ const displayGame = () => {
     drawInstructions();
 }
 
+singInBtn.addEventListener("click", () => {
+    sesionStartOptions.style.display = "flex";
+    gameConteiner.style.display = "none";
+    logOutBtn.style.display = "none";
+
+});
+
+singUpBtn.addEventListener("click", () => {
+    InputVerification(inputUsername.value, inputPassword.value);
+
+    (inputUsername.value != "" && inputPassword.value != "") && userSingUp(inputUsername.value, inputPassword.value);
+});
+
+startPlayBtn.addEventListener("click", () => {
+    InputVerification(inputUsername.value, inputPassword.value);
+
+    (inputUsername.value != "" && inputPassword.value != "") && userSingInVerication(inputUsername.value, inputPassword.value);
+});
+
+logOutBtn.addEventListener("click", () => {
+
+    logOutBtn.style.display = "none";
+    headerElementsBtn.forEach(element => {
+        //Cada elemento del Header oculto se muestra con display "inline-block"
+        element.style.display = "none";
+    });
+    singInBtn.style.display = "flex";
+
+    player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, null, null);
+
+    clearCanva();
+    drawInstructions();
+
+    console.log(player);
+})
+
 const InputVerification = (user, password) => {
     if (user == "" || password == "") {
-
-        divInvalid.innerHTML = `
-            <p>
-                You must enter a valid name and password.
-            </p>`;
+        divInvalid.innerHTML = `<p>You must enter a valid name and password.</p>`;
     }
 }
 
 const userSingUp = (user, password) => {
-    if (checkBtn) {
-        let player = new Player(user, password, null, snakeChoice, 0);
+    if (checkBtn.checked) {
+        player = new Player(user, password, null, snakeChoice, 0);
         usersDataBase.push(player);
 
-        localStorage.removeItem("usersDataBase")
+        localStorage.removeItem("usersDataBase");
         saveNewData("usersDataBase", usersDataBase);
 
         displayGame();
     } else {
-        let player = new Player(user, password, null, snakeChoice, 0);
+        player = new Player(user, password, null, snakeChoice, 0);
+        displayGame();
+        return player
     }
 }
 
@@ -143,11 +170,10 @@ const userSingInVerication = (user, password) => {
     let userExist = usersDataBase.find(element => element.usernameLogIn === user);
 
     if (userExist == undefined) {
-        divInvalid.innerHTML = `
-        <p>
-        Try to Sing Up first!
-        </p>`;
+        divInvalid.innerHTML = `<p>That user dosen't exist.</p>
+        <p>Try to Sing Up first!</p>`;
         singUpBtn.style.display = "flex";
+        startPlayBtn.style.display = "none";
 
     } else { //Accedo si se encontró un usuario con el find()
         let pass = userExist.passwordLogIn;
@@ -165,24 +191,6 @@ const userSingInVerication = (user, password) => {
     }
 }
 
-singUpBtn.addEventListener("click", () => {
-    InputVerification(inputUsername.value, inputPassword.value);
-    if (inputUsername.value != "" && inputPassword.value != "") {
-
-        userSingUp(inputUsername.value, inputPassword.value);
-    }
-})
-
-startPlayBtn.addEventListener("click", () => {
-    InputVerification(inputUsername.value, inputPassword.value);
-    if (inputUsername.value != "" && inputPassword.value != "") {
-
-        userSingInVerication(inputUsername.value, inputPassword.value);
-    }
-    // usersDataBase.push(player)
-    // localStorage.setItem("usersDataBase", JSON.stringify(usersDataBase));
-    //Guardar ingreso del usuario y ejecutar funcion de comprobacion de datos
-});
 
 //__________________________________________________________________________________________________________________________________________//
 
@@ -285,7 +293,8 @@ const drawInstructions = () => {
     ctx.font = "26px Righteous";
     ctx.fillStyle = "#000";
     ctx.textAlign = "center";
-    ctx.fillText(`Hello ${inputUsername.value}!! Welcome to Snake Game...`, 250, 100);
+    ctx.fillText(`Hello ${player.usernameLogIn}!!`, 250, 80);
+    ctx.fillText(`Welcome to Snake Game...`, 250, 120);
     ctx.fillText(`Use arrow's key to move the Snake`, 250, 230);
     ctx.fillText(`Press 'Enter' to Start...`, 250, 270);
     ctx.fillText(`Sing In or Registrate for get Full Acces`, 250, 435);
