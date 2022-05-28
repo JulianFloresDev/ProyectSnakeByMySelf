@@ -103,6 +103,8 @@ const displayGame = () => {
         //Cada elemento del Header oculto se muestra con display "inline-block"
         element.style.display = "inline-block";
     });
+    scoreBtn.style.display = "flex";
+
     clearCanva();
     drawInstructions();
 }
@@ -133,6 +135,8 @@ logOutBtn.addEventListener("click", () => {
         //Cada elemento del Header oculto se muestra con display "inline-block"
         element.style.display = "none";
     });
+    scoreBtn.style.display = "flex";
+
     singInBtn.style.display = "flex";
 
     player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, null, null);
