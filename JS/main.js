@@ -23,6 +23,8 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     startPlayBtn = document.querySelector(".btn-startGame"),
 
+    checkBtn = document.querySelector(".checkbox"),
+
     singUpBtn = document.querySelector(".btn-singUp"),
 
     logOutBtn = document.querySelector(".btn-logOut"),
@@ -31,24 +33,12 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     inputUsername = document.querySelector("#usernameInput"),
 
-    inputPassword = document.querySelector("#passwordInput"),
+    inputPassword = document.querySelector("#passwordInput");
 
 
-    displayStartOptions = () => {
-        gameConteiner.style.display = 'flex';
-        logOutBtn.style.display = "flex";
-    };
-
-
-//__________________________________________________________________________________________________________________________________________//
-
-//                                       Inicio de Sesión y Registro del Usuario
-//__________________________________________________________________________________________________________________________________________//
-let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || []
-//Usar find para el array
-
-
-const snakeColecction = [];
+let gameInterval;
+const snakeColecction = [],
+    bodySnake = [];
 
 class Player {
     constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
@@ -59,6 +49,48 @@ class Player {
         this.maxScore = maxScore;
     }
 };
+class Snake {
+    constructor(name, color, userSpeed, lenghtSnake, usuarioSnake, skin, secondaryColor) {
+        this.name = name;
+        this.color = color;
+        this.speed = userSpeed;
+        this.lenghtSnake = lenghtSnake;
+        this.owner = usuarioSnake;
+        this.skin = skin;
+        this.secondaryColor = secondaryColor;
+    }
+};
+class SnakeCell {
+    constructor(posX, posY, vectorMov) {
+        this.posX = posX;
+        this.posY = posY;
+        this.vectorMov = vectorMov;
+    }
+};
+const movement = {
+    UP: 1,
+    DOWN: 2,
+    LEFT: 3,
+    RIGHT: 4,
+};
+let food = {
+    x: Math.round(Math.random() * 47 + 1) * (10),
+    y: Math.round(Math.random() * 47 + 1) * (10),
+}
+
+let snakeChoice = new Snake("Default Snake", "#0F0E0E", 105, 4, false, false, "#DCE85B");
+//__________________________________________________________________________________________________________________________________________//
+
+//                                       Inicio de Sesión y Registro del Usuario
+//__________________________________________________________________________________________________________________________________________//
+
+let player;
+
+const saveNewData = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
 
 singInBtn.addEventListener("click", () => {
     sesionStartOptions.style.display = "flex";
@@ -74,56 +106,83 @@ const displayGame = () => {
     logOutBtn.style.display = "flex";
     gameConteiner.style.display = "flex";
 
-
     headerElementsBtn.forEach(element => {
         //Cada elemento del Header oculto se muestra con display "inline-block"
         element.style.display = "inline-block";
     });
+    clearCanva();
+    drawInstructions();
 }
 
-
-//Jueves terminé en esta linea. Falta agregar un Sing In y un Sing Up para diferenciar usuarios nuevos de ya ingresados
-const userInputVerification = () => {
-    if (inputUsername.value == "" || inputPassword.value == "") {
-
-        console.log(inputUsername, inputPassword);
+const InputVerification = (user, password) => {
+    if (user == "" || password == "") {
 
         divInvalid.innerHTML = `
             <p>
                 You must enter a valid name and password.
             </p>`;
-
-    } else {
-
-        userRegisterVerification(inputUsername.value, inputPassword.value);
-
-        let player = new Player(inputUsername.value, inputPassword.value, null, false)
-        displayGame();
-        console.log(player);
     }
-};
-
-const userRegisterVerification = (user, pasword) => {
-    let exist = usersDataBase.some((element) => element.usernameLogIn === element)
 }
 
+const userSingUp = (user, password) => {
+    if (checkBtn) {
+        let player = new Player(user, password, null, snakeChoice, 0);
+        usersDataBase.push(player);
 
-startPlayBtn.addEventListener("click", () => {
-    userInputVerification();
-    usersDataBase.push(player)
-    localStorage.setItem("usersDataBase", JSON.stringify(usersDataBase));
-    //Guardar ingreso del usuario y ejecutar funcion de comprobacion de datos
-})
+        localStorage.removeItem("usersDataBase")
+        saveNewData("usersDataBase", usersDataBase);
 
-for (const btn of headerElementsBtn) {
-    btn.addEventListener("click", () => {
-        if (condition) {
+        displayGame();
+    } else {
+        let player = new Player(user, password, null, snakeChoice, 0);
+    }
+}
 
+const userSingInVerication = (user, password) => {
+
+    let userExist = usersDataBase.find(element => element.usernameLogIn === user);
+
+    if (userExist == undefined) {
+        divInvalid.innerHTML = `
+        <p>
+        Try to Sing Up first!
+        </p>`;
+        singUpBtn.style.display = "flex";
+
+    } else { //Accedo si se encontró un usuario con el find()
+        let pass = userExist.passwordLogIn;
+
+        if (pass != password) {
+            divInvalid.innerHTML = `
+            <p>
+            Invalid username or password. Try Again!
+            </p>`;
         } else {
 
+            player = userExist;
+            displayGame();
         }
-    })
+    }
 }
+
+singUpBtn.addEventListener("click", () => {
+    InputVerification(inputUsername.value, inputPassword.value);
+    if (inputUsername.value != "" && inputPassword.value != "") {
+
+        userSingUp(inputUsername.value, inputPassword.value);
+    }
+})
+
+startPlayBtn.addEventListener("click", () => {
+    InputVerification(inputUsername.value, inputPassword.value);
+    if (inputUsername.value != "" && inputPassword.value != "") {
+
+        userSingInVerication(inputUsername.value, inputPassword.value);
+    }
+    // usersDataBase.push(player)
+    // localStorage.setItem("usersDataBase", JSON.stringify(usersDataBase));
+    //Guardar ingreso del usuario y ejecutar funcion de comprobacion de datos
+});
 
 //__________________________________________________________________________________________________________________________________________//
 
@@ -148,6 +207,7 @@ scoreBtn.addEventListener("click", () => {
             divScoreTable.style.display = "flex";
             btnScoreClicked = true;
             break;
+
         case true:
             divScoreTable.style.display = "none";
             btnScoreClicked = false;
@@ -173,52 +233,11 @@ scoreBtn.addEventListener("click", () => {
 //Hasta acá el código corresponde a la identificación del usuario y el ingreso de su 'Snake'
 //__________________________________________________________________________________________________________________________________________//
 
-const saveNewData = (key, value) => {
-    localStorage.setItem(key, value);
-}
-// saveNewData("snakeBodyPosition", JSON.stringify(bodySnake));
-
-
-let gameInterval;
-
-const bodySnake = [];
-const movement = {
-    UP: 1,
-    DOWN: 2,
-    LEFT: 3,
-    RIGHT: 4,
-}
-class Snake {
-    constructor(name, color, userSpeed, lenghtSnake, usuarioSnake, skin, secondaryColor) {
-        this.name = name;
-        this.color = color;
-        this.speed = userSpeed;
-        this.lenghtSnake = lenghtSnake;
-        this.owner = usuarioSnake;
-        this.skin = skin;
-        this.secondaryColor = secondaryColor;
-    }
-}
-class SnakeCell {
-    constructor(posX, posY, vectorMov) {
-        this.posX = posX;
-        this.posY = posY;
-        this.vectorMov = vectorMov;
-    }
-}
-let food = {
-    x: Math.round(Math.random() * 47 + 1) * (10),
-    y: Math.round(Math.random() * 47 + 1) * (10),
-}
-
-snakeChoice = new Snake("Black Piton", "#0F0E0E", 105, 4, true, false, "#DCE85B");
-
-
 function startGame() {
-    food.x = Math.round(Math.random() * 47 + 1) * (10),
-        food.y = Math.round(Math.random() * 47 + 1) * (10),
+    food.x = Math.round(Math.random() * 47 + 1) * (10);
+    food.y = Math.round(Math.random() * 47 + 1) * (10);
 
-        clearCanva();
+    clearCanva();
     if (bodySnake.length > 0) {
         let maxCells = bodySnake.length;
         for (let i = 0; i < maxCells; i++) {
@@ -255,27 +274,26 @@ const drawBorder = () => {
     ctx.stroke();
     ctx.closePath();
 }
-drawBorder();
+
+let clearCanva = () => {
+    ctx.clearRect(0, 0, 500, 500);
+    drawBorder();
+}
 
 const drawInstructions = () => {
-    drawBorder();
+
+    ctx.font = "26px Righteous";
     ctx.fillStyle = "#000";
-    ctx.font = "27px Righteous";
     ctx.textAlign = "center";
     ctx.fillText(`Hello ${inputUsername.value}!! Welcome to Snake Game...`, 250, 100);
     ctx.fillText(`Use arrow's key to move the Snake`, 250, 230);
     ctx.fillText(`Press 'Enter' to Start...`, 250, 270);
     ctx.fillText(`Sing In or Registrate for get Full Acces`, 250, 435);
     ctx.fillText(`to Marketplace and Diferents Snakes`, 250, 470);
-}
 
-drawInstructions();
-
-let clearCanva = () => {
-    ctx.clearRect(0, 0, 500, 500);
     drawBorder();
-
 }
+drawInstructions();
 
 const drawBox = (xi, yi, color, secondaryColor) => {
     ctx.fillStyle = color;
@@ -375,6 +393,12 @@ const ajustPosition = () => {
 
 //Condiciones de finalización y continuidad del juego.
 
+const saveMaxScore = () => {
+    if (score.value > player.maxScore) {
+
+    }
+}
+
 const ajustScore = () => {
     let result = (bodySnake.length - snakeChoice.lenghtSnake);
 
@@ -387,6 +411,7 @@ const ajustScore = () => {
 }
 
 const endGame = () => {
+    clearCanva();
     ctx.textAlign = "center";
     ctx.font = "30px Righteous";
     ctx.fillText("Game over!!", 250, 68);
@@ -398,8 +423,6 @@ const endGame = () => {
 
 
     clearInterval(gameInterval);
-
-    saveNewData("userLocalScore", JSON.stringify())
 
     score.innerHTML = `<h3>Score: 0</h3>`
 
@@ -415,10 +438,7 @@ const checkPosition = () => {
         for (j = 0; j < bodySnake.length; j++) {
             if (bodySnake[i] != bodySnake[j]) {
                 if (bodySnake[i].posX == bodySnake[j].posX && bodySnake[i].posY == bodySnake[j].posY) {
-
                     endGame();
-
-                    console.log("¡¡Game Over!! Press F5 for play again");
                 }
             }
         }
@@ -428,7 +448,6 @@ const checkPosition = () => {
 
         endGame();
 
-        console.log("¡¡Game Over!! Press F5 for play again");
     }
     //Verificamos si la cabeza de la serpiente coincide con la posicion de la comida; en caso de que coincidan aumentamos la longitud de la serpiente, y redefinimos una nueva posicion para la serpiente
     if (bodySnake[0].posX == food.x && bodySnake[0].posY == food.y) {
