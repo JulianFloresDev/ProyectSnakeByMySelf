@@ -33,7 +33,11 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     inputUsername = document.querySelector("#usernameInput"),
 
-    inputPassword = document.querySelector("#passwordInput");
+    inputPassword = document.querySelector("#passwordInput"),
+
+    selectSnakeConteiner = document.querySelector(".selectSnake-conteiner"),
+
+    playWithSelectedBtn = document.querySelector(".btn-playWithSelected");
 
 
 let snakeChoice;
@@ -47,7 +51,6 @@ const bodySnake = [],
         speed: 105,
         lenghtSnake: 4,
         owner: false,
-        skin: false,
         secondaryColor: "#D8DD4A"
     }, {
         name: "Black Piton",
@@ -55,7 +58,6 @@ const bodySnake = [],
         speed: 125,
         lenghtSnake: 6,
         owner: false,
-        skin: false,
         secondaryColor: "#DCE85B"
     }, {
         name: "Red Dragon",
@@ -63,7 +65,6 @@ const bodySnake = [],
         speed: 135,
         lenghtSnake: 10,
         owner: false,
-        skin: false,
         secondaryColor: "#CF4C05"
     }, {
         name: "Blue Fish Sea Viper",
@@ -71,7 +72,6 @@ const bodySnake = [],
         speed: 75,
         lenghtSnake: 1,
         owner: false,
-        skin: false,
         secondaryColor: "#0F0E0E"
     }];
 
@@ -85,13 +85,12 @@ class Player {
     }
 };
 class Snake {
-    constructor(name, color, speed, lenghtSnake, owner, skin, secondaryColor) {
+    constructor(name, color, speed, lenghtSnake, owner, secondaryColor) {
         this.name = name;
         this.color = color;
         this.speed = speed;
         this.lenghtSnake = lenghtSnake;
         this.owner = owner;
-        this.skin = skin;
         this.secondaryColor = secondaryColor;
     }
 };
@@ -120,7 +119,7 @@ let food = {
 
 let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, 0);
 
-snakeChoice = player.snakeColecction[Math.round(Math.random() * 3)];
+snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))];
 
 const saveNewData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
@@ -156,6 +155,7 @@ singUpBtn.addEventListener("click", () => {
 
     (inputUsername.value != "" && inputPassword.value != "") && userSingUp(inputUsername.value, inputPassword.value);
 });
+
 
 startPlayBtn.addEventListener("click", () => {
     InputVerification(inputUsername.value, inputPassword.value);
@@ -224,7 +224,6 @@ const userSingInVerication = (user, password) => {
         } else {
 
             player = userExist;
-            // snakeChoice = player.snakeColecction[0];
             displayGame();
         }
     }
@@ -232,19 +231,29 @@ const userSingInVerication = (user, password) => {
 
 
 //__________________________________________________________________________________________________________________________________________//
-
-
-// Ingreso de datos para la seleccion de la serpiente a utilizar.
-
+// Ingreso de datos para la seleccion de la serpiente a utilizar, y botones de usabilidad.
 
 //Para cada boton de los seleccionados con querySelectorAll le damos la opción de ocultar las opciones iniciales y mostrar el div de selección.
 for (const btn of selectSnakeBtn) {
     btn.addEventListener("click", () => {
 
-        //Agregar un cuerpo al body que permita seleccionar una snake dentro de las que el usuario tenga
+        clearInterval(gameInterval);
+        gameConteiner.style.display = 'none';
+
+        selectSnakeConteiner.style.display = 'flex';
+        selectSnakeConteiner.innerHTML = `
+
+        `;
+
+
 
     })
 };
+
+//Boton para iniciar la partida cuando se selecciona una snake
+playWithSelectedBtn.addEventListener("click", ()=>{
+    displayGame();
+});
 
 //El siguiente bloque muestra y oculta el "Global Score".
 let btnScoreClicked = false;
@@ -265,6 +274,7 @@ scoreBtn.addEventListener("click", () => {
 
 //Hasta acá el código corresponde a la identificación del usuario y el ingreso de su 'Snake'
 //__________________________________________________________________________________________________________________________________________//
+// Configuración del juego y sus funcionalidades.
 
 function startGame() {
     food.x = Math.round(Math.random() * 47 + 1) * (10);
@@ -288,7 +298,7 @@ function startGame() {
         bodySnake.push(new SnakeCell((snakeChoice.lenghtSnake - i) * 10, 10, movement.RIGHT));
     }
 
-    console.log(snakeChoice);
+    console.log(snakeChoice); //Ayuda a visualizar la serpiente escogida (me sirve para cuando es Aleatoria)
 
 }
 
@@ -364,9 +374,7 @@ const drawFood = () => {
             break;
         }
     }
-    if (empySlot == true) {
-        drawBox(food.x, food.y, "#BC170C", "#EF8E69");
-    } else drawFood();
+    (empySlot == true) ? drawBox(food.x, food.y, "#BC170C", "#EF8E69"): drawFood();
 }
 
 let drawSnake = () => {
@@ -452,7 +460,8 @@ const endGame = () => {
     ctx.textAlign = "center";
     ctx.font = "30px Righteous";
     ctx.fillText("Game over!!", 250, 68);
-    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 110);
+    ctx.fillText(`Thanks for play ${player.usernameLogIn}`, 250, 110);
+    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 150);
 
     ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
     ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
@@ -462,24 +471,20 @@ const endGame = () => {
 
     score.innerHTML = `<h3>Score: 0</h3>`
 
+    //Agregar puntaje a la tabla de las mejores posiciones!
     if (snakeChoice.owner) {
-        //Agregar puntaje a la tabla de las mejores posiciones!
 
     }
 }
 
 const checkPosition = () => {
     //Verificamos que la cabeza de la serpiente no se encuentre en superposición con el resto del cuerpo
-    for (i = 0; i < bodySnake.length; i++) {
-        for (j = 0; j < bodySnake.length; j++) {
-            if (bodySnake[i] != bodySnake[j]) {
-                (bodySnake[i].posX == bodySnake[j].posX && bodySnake[i].posY == bodySnake[j].posY) && endGame();
-
-            }
-        }
+    for (j = 1; j < bodySnake.length; j++) {
+        (bodySnake[0].posX == bodySnake[j].posX && bodySnake[0].posY == bodySnake[j].posY) && endGame(); // Estructura if AND
     }
+
     //Verificamos que la cabeza de la serpiente no se encuentre fuera del margen del juego delimitado por esas posiciones
-    (bodySnake[0].posX < 10 || bodySnake[0].posX + 10 > 490 || bodySnake[0].posY < 10 || bodySnake[0].posY + 10 > 490) && endGame();
+    (bodySnake[0].posX < 10 || bodySnake[0].posX + 10 > 490 || bodySnake[0].posY < 10 || bodySnake[0].posY + 10 > 490) && endGame(); // Estructura if AND
 
     //Verificamos si la cabeza de la serpiente coincide con la posicion de la comida; en caso de que coincidan aumentamos la longitud de la serpiente, y redefinimos una nueva posicion para la serpiente
     if (bodySnake[0].posX == food.x && bodySnake[0].posY == food.y) {
