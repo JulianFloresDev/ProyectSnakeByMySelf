@@ -17,7 +17,7 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     score = document.querySelector(".score"),
 
-    singInBtn = document.querySelector(".btn-enterGame"),
+    enterGameBtn = document.querySelector(".btn-enterGame"),
 
     divInvalid = document.querySelector(".invalid"),
 
@@ -36,9 +36,44 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
     inputPassword = document.querySelector("#passwordInput");
 
 
+let snakeChoice;
 let gameInterval;
-const snakeColecction = [],
-    bodySnake = [];
+
+const bodySnake = [],
+
+    snakeColecction = [{
+        name: "Default Snake",
+        color: "#477A28",
+        speed: 105,
+        lenghtSnake: 4,
+        owner: false,
+        skin: false,
+        secondaryColor: "#D8DD4A"
+    }, {
+        name: "Black Piton",
+        color: "#0F0E0E",
+        speed: 125,
+        lenghtSnake: 6,
+        owner: false,
+        skin: false,
+        secondaryColor: "#DCE85B"
+    }, {
+        name: "Red Dragon",
+        color: "#B30E09",
+        speed: 135,
+        lenghtSnake: 10,
+        owner: false,
+        skin: false,
+        secondaryColor: "#CF4C05"
+    }, {
+        name: "Blue Fish Sea Viper",
+        color: "#4D86B6",
+        speed: 75,
+        lenghtSnake: 1,
+        owner: false,
+        skin: false,
+        secondaryColor: "#0F0E0E"
+    }];
 
 class Player {
     constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
@@ -50,12 +85,12 @@ class Player {
     }
 };
 class Snake {
-    constructor(name, color, userSpeed, lenghtSnake, usuarioSnake, skin, secondaryColor) {
+    constructor(name, color, speed, lenghtSnake, owner, skin, secondaryColor) {
         this.name = name;
         this.color = color;
-        this.speed = userSpeed;
+        this.speed = speed;
         this.lenghtSnake = lenghtSnake;
-        this.owner = usuarioSnake;
+        this.owner = owner;
         this.skin = skin;
         this.secondaryColor = secondaryColor;
     }
@@ -78,14 +113,14 @@ let food = {
     y: Math.round(Math.random() * 47 + 1) * (10),
 }
 
-let snakeChoice = new Snake("Default Snake", "#0F0E0E", 105, 4, false, false, "#DCE85B");
 //__________________________________________________________________________________________________________________________________________//
 
 //                                       Inicio de Sesión y Registro del Usuario
 //__________________________________________________________________________________________________________________________________________//
 
-let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, null, null);
-console.log(player);
+let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, 0);
+
+snakeChoice = player.snakeColecction[Math.round(Math.random() * 3)];
 
 const saveNewData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
@@ -95,7 +130,7 @@ let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
 
 const displayGame = () => {
     sesionStartOptions.style.display = "none";
-    singInBtn.style.display = "none";
+    enterGameBtn.style.display = "none";
     logOutBtn.style.display = "flex";
     gameConteiner.style.display = "flex";
 
@@ -109,11 +144,11 @@ const displayGame = () => {
     drawInstructions();
 }
 
-singInBtn.addEventListener("click", () => {
+enterGameBtn.addEventListener("click", () => {
     sesionStartOptions.style.display = "flex";
-    gameConteiner.style.display = "none";
-    logOutBtn.style.display = "none";
+    inputUsername.focus();
 
+    gameConteiner.style.display = "none";
 });
 
 singUpBtn.addEventListener("click", () => {
@@ -137,14 +172,12 @@ logOutBtn.addEventListener("click", () => {
     });
     scoreBtn.style.display = "flex";
 
-    singInBtn.style.display = "flex";
+    enterGameBtn.style.display = "flex";
 
-    player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, null, null);
+    player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, null);
 
     clearCanva();
     drawInstructions();
-
-    console.log(player);
 })
 
 const InputVerification = (user, password) => {
@@ -155,7 +188,7 @@ const InputVerification = (user, password) => {
 
 const userSingUp = (user, password) => {
     if (checkBtn.checked) {
-        player = new Player(user, password, null, snakeChoice, 0);
+        player = new Player(user, password, null, snakeColecction, 0);
         usersDataBase.push(player);
 
         localStorage.removeItem("usersDataBase");
@@ -163,7 +196,7 @@ const userSingUp = (user, password) => {
 
         displayGame();
     } else {
-        player = new Player(user, password, null, snakeChoice, 0);
+        player = new Player(user, password, null, snakeColecction, 0);
         displayGame();
         return player
     }
@@ -176,6 +209,7 @@ const userSingInVerication = (user, password) => {
     if (userExist == undefined) {
         divInvalid.innerHTML = `<p>That user dosen't exist.</p>
         <p>Try to Sing Up first!</p>`;
+
         singUpBtn.style.display = "flex";
         startPlayBtn.style.display = "none";
 
@@ -190,6 +224,7 @@ const userSingInVerication = (user, password) => {
         } else {
 
             player = userExist;
+            // snakeChoice = player.snakeColecction[0];
             displayGame();
         }
     }
@@ -228,26 +263,14 @@ scoreBtn.addEventListener("click", () => {
 });
 
 
-
-
-//snakeChoice = new Snake("#D94945", 90, 3, true, false, "#D94945");    Roja
-//snakeChoice = new Snake("#0F0E0E", 120, 3, true, false, "#DCE85B");   Negra
-
-//snakeChoice = new Snake("#4D86B6", 60, 3, true, false, "#0F0E0E");    Azul
-
-//snakeChoice = new Snake("#2A662B", (1000 / 15), 3, true, false, "#79820B");   Verde
-
-//snakeChoice = new Snake("#484848", 75, 3, false, false, "#484848");   Gris
-
-
-
-
 //Hasta acá el código corresponde a la identificación del usuario y el ingreso de su 'Snake'
 //__________________________________________________________________________________________________________________________________________//
 
 function startGame() {
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
+
+    snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))];
 
     clearCanva();
     if (bodySnake.length > 0) {
@@ -264,7 +287,8 @@ function startGame() {
     for (let i = 1; i < snakeChoice.lenghtSnake; i++) {
         bodySnake.push(new SnakeCell((snakeChoice.lenghtSnake - i) * 10, 10, movement.RIGHT));
     }
-    // saveNewData("snakeBodyPosition", JSON.stringify(bodySnake)); Acá llamaría a la función "saveNewData" Para definir que Snake fué seleccionada dentro de las snakes del usuario
+
+    console.log(snakeChoice);
 
 }
 
@@ -372,7 +396,6 @@ const movementKey = (e) => {
     } else return;
 }
 document.addEventListener("keydown", movementKey);
-
 
 const ajustPosition = () => {
     let cabezaPosX = bodySnake[0].posX;
@@ -484,9 +507,6 @@ function gameLoop() {
     checkPosition();
     drawSnake();
 }
-
-
-console.log(snakeChoice);
 
 //__________________________________________________________________________________________________________________________________________//
 
