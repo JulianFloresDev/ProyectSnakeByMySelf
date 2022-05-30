@@ -448,12 +448,12 @@ const ajustScore = () => {
 
 const endGame = () => {
     clearCanva();
+    ctx.fillStyle = "#000";
     ctx.textAlign = "center";
     ctx.font = "30px Righteous";
     ctx.fillText("Game over!!", 250, 68);
     ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 110);
 
-    ctx.fillStyle = "#000";
     ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
     ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
 
@@ -462,7 +462,7 @@ const endGame = () => {
 
     score.innerHTML = `<h3>Score: 0</h3>`
 
-    if (snakeChoice.owner == "true") {
+    if (snakeChoice.owner) {
         //Agregar puntaje a la tabla de las mejores posiciones!
 
     }
@@ -473,18 +473,14 @@ const checkPosition = () => {
     for (i = 0; i < bodySnake.length; i++) {
         for (j = 0; j < bodySnake.length; j++) {
             if (bodySnake[i] != bodySnake[j]) {
-                if (bodySnake[i].posX == bodySnake[j].posX && bodySnake[i].posY == bodySnake[j].posY) {
-                    endGame();
-                }
+                (bodySnake[i].posX == bodySnake[j].posX && bodySnake[i].posY == bodySnake[j].posY) && endGame();
+
             }
         }
     }
     //Verificamos que la cabeza de la serpiente no se encuentre fuera del margen del juego delimitado por esas posiciones
-    if (bodySnake[0].posX < 10 || bodySnake[0].posX + 10 > 490 || bodySnake[0].posY < 10 || bodySnake[0].posY + 10 > 490) {
+    (bodySnake[0].posX < 10 || bodySnake[0].posX + 10 > 490 || bodySnake[0].posY < 10 || bodySnake[0].posY + 10 > 490) && endGame();
 
-        endGame();
-
-    }
     //Verificamos si la cabeza de la serpiente coincide con la posicion de la comida; en caso de que coincidan aumentamos la longitud de la serpiente, y redefinimos una nueva posicion para la serpiente
     if (bodySnake[0].posX == food.x && bodySnake[0].posY == food.y) {
 
@@ -504,8 +500,8 @@ function gameLoop() {
     clearCanva();
     drawFood();
     ajustPosition();
-    checkPosition();
     drawSnake();
+    checkPosition();
 }
 
 //__________________________________________________________________________________________________________________________________________//
