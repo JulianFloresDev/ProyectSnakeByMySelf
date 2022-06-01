@@ -19,9 +19,10 @@ body {
     height: 100%;
     overflow: hidden;
     touch-action: none;
-    display: block;
 
+    display: block;
     align-items: center;
+    justify-content: center;
 }
 
 canvas {
@@ -194,29 +195,6 @@ nav ul li {
 
 }
 
-/* .snake-values {
-    display: none;
-    background-color: #81B437;
-    width: 490px;
-    height: 490px;
-    border: 6px double #000;
-
-    margin-top: 40px;
-
-    position: absolute;
-    flex-direction: column;
-    z-index: 15;
-} */
-
-/* .conteiner .div-start {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 30;
-    margin-top: 181px;
-} */
-
 .game {
     position: absolute;
     display: flex;
@@ -268,17 +246,52 @@ td th {
     padding: 8px;
 }
 
+.selectSnake-conteiner {
+    display: none;
+    flex-direction: column;
+
+    background: #81B437;
+    width: 1210px;
+    height: 560px;
+    border: 4px double #464A44;
+    border-radius: 20px;
+    margin: 1%;
+
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards-conteiner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 90%;
+}
+
+.card {
+    width: 215px;
+    height: 360px;
+    background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%);
+    mix-blend-mode: difference;
+    border: 10px solid #2D6314;
+}
+
 .button-conteiner {
     padding: 0.35%;
     background: linear-gradient(270deg, #C4EF86 0%, rgba(169, 202, 120, 0) 100%);
     border-radius: 10px;
-    
+    width: 98%;
+
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+
+    margin: 1%;
 }
 
-#selectSnake-button{
+#selectSnake-button {
     display: flex;
     margin: 0%;
 }
