@@ -37,6 +37,8 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     selectSnakeConteiner = document.querySelector(".selectSnake-conteiner"),
 
+    cardsConteiner = document.querySelector(".cards-conteiner"),
+
     playWithSelectedBtn = document.querySelector(".btn-playWithSelected");
 
 
@@ -126,10 +128,13 @@ const saveNewData = (key, value) => {
 }
 
 let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
+let userSingIn = JSON.parse(sessionStorage.getItem("userSingIn")) || []; //logout debería borrar este dato?
 
 const displayGame = () => {
     sesionStartOptions.style.display = "none";
     enterGameBtn.style.display = "none";
+    selectSnakeConteiner.style.display = "none";
+
     logOutBtn.style.display = "flex";
     gameConteiner.style.display = "flex";
 
@@ -144,91 +149,93 @@ const displayGame = () => {
 }
 
 enterGameBtn.addEventListener("click", () => {
+
     sesionStartOptions.style.display = "flex";
+
     inputUsername.focus();
 
     gameConteiner.style.display = "none";
+
+    if (checkBtn.checked && userSingIn[0] !== []) {
+        inputUsername.value = userSingIn[0].usernameLogIn;
+        inputPassword.value = userSingIn[0].passwordLogIn;
+    }
 });
-
-singUpBtn.addEventListener("click", () => {
-    InputVerification(inputUsername.value, inputPassword.value);
-
-    (inputUsername.value != "" && inputPassword.value != "") && userSingUp(inputUsername.value, inputPassword.value);
-});
-
 
 startPlayBtn.addEventListener("click", () => {
     InputVerification(inputUsername.value, inputPassword.value);
-
-    (inputUsername.value != "" && inputPassword.value != "") && userSingInVerication(inputUsername.value, inputPassword.value);
 });
+
+const InputVerification = (user, password) => {
+    divInvalid.innerHTML = ``; //Limpiamos el campo de ingresos inválidos.
+
+    const checkedBtn = () => {
+        if (checkBtn.checked) {
+            //Guardamos los datos del usuario dentro del Objeto userSingIn y luego en el SesionStorage, para volver a ingresar en el momento.
+            userSingIn.push(player);
+            sessionStorage.setItem("userSingIn", JSON.stringify(userSingIn));
+        }
+    }
+
+    if (user == "" || password == "") {
+        divInvalid.innerHTML = `<p>You must enter a valid name and password.</p>`;
+    } else if (startPlayBtn.value === 'Start Play') {
+        let userExist = usersDataBase.find(element => element.usernameLogIn === user); //Busco un usuario que coincida con la base de datos, si existe, ejecuto lo siguiente:
+
+        if (userExist !== undefined) { //Accedo si se encontró un usuario con el find()
+            let pass = userExist.passwordLogIn;
+
+            if (pass != password) {
+                divInvalid.innerHTML = `
+            <p>
+            Invalid username or password. Try Again!
+            </p>`;
+            } else {
+                player = userExist;
+                checkedBtn();
+                displayGame();
+            }
+        } else {
+            divInvalid.innerHTML = `
+                <p>That user dosen't exist.</p>
+                <p>Try to Sing Up first!</p>`;
+            startPlayBtn.value = 'Sing Up';
+
+            player = new Player(user, password, null, snakeColecction, 0);
+            return player
+        }
+    } else { //Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
+        //Guardamos los datos del usuario dentro del Array de usuarios válidos para ingresar del LocalStorage.
+        usersDataBase.push(player);
+        localStorage.removeItem("usersDataBase");
+        saveNewData("usersDataBase", usersDataBase);
+
+        checkedBtn();
+        displayGame();
+    }
+}
 
 logOutBtn.addEventListener("click", () => {
 
-    logOutBtn.style.display = "none";
+    displayGame();
     headerElementsBtn.forEach(element => {
         //Cada elemento del Header oculto se muestra con display "inline-block"
         element.style.display = "none";
     });
     scoreBtn.style.display = "flex";
-
+    logOutBtn.style.display = "none";
     enterGameBtn.style.display = "flex";
+    //Limpiar los valores ingresados para solamente guardarlos en caso de que el usuario lo pida
 
     player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, null);
 
+    inputUsername.value = "";
+    inputPassword.value = "";
+    startPlayBtn.value = 'Start Play';
+
     clearCanva();
     drawInstructions();
-})
-
-const InputVerification = (user, password) => {
-    if (user == "" || password == "") {
-        divInvalid.innerHTML = `<p>You must enter a valid name and password.</p>`;
-    }
-}
-
-const userSingUp = (user, password) => {
-    if (checkBtn.checked) {
-        player = new Player(user, password, null, snakeColecction, 0);
-        usersDataBase.push(player);
-
-        localStorage.removeItem("usersDataBase");
-        saveNewData("usersDataBase", usersDataBase);
-
-        displayGame();
-    } else {
-        player = new Player(user, password, null, snakeColecction, 0);
-        displayGame();
-        return player
-    }
-}
-
-const userSingInVerication = (user, password) => {
-
-    let userExist = usersDataBase.find(element => element.usernameLogIn === user);
-
-    if (userExist == undefined) {
-        divInvalid.innerHTML = `<p>That user dosen't exist.</p>
-        <p>Try to Sing Up first!</p>`;
-
-        singUpBtn.style.display = "flex";
-        startPlayBtn.style.display = "none";
-
-    } else { //Accedo si se encontró un usuario con el find()
-        let pass = userExist.passwordLogIn;
-
-        if (pass != password) {
-            divInvalid.innerHTML = `
-            <p>
-            Invalid username or password. Try Again!
-            </p>`;
-        } else {
-
-            player = userExist;
-            displayGame();
-        }
-    }
-}
-
+});
 
 //__________________________________________________________________________________________________________________________________________//
 // Ingreso de datos para la seleccion de la serpiente a utilizar, y botones de usabilidad.
@@ -241,17 +248,19 @@ for (const btn of selectSnakeBtn) {
         gameConteiner.style.display = 'none';
 
         selectSnakeConteiner.style.display = 'flex';
-        selectSnakeConteiner.innerHTML = `
 
-        `;
-
-
-
-    })
+        snakeColecction.forEach(element, (element) => {
+            cardsConteiner.innerHTML += `
+            <div class="card">
+                
+            </div>`
+        })
+    });
 };
 
 //Boton para iniciar la partida cuando se selecciona una snake
-playWithSelectedBtn.addEventListener("click", ()=>{
+playWithSelectedBtn.addEventListener("click", () => {
+
     displayGame();
 });
 
@@ -280,7 +289,7 @@ function startGame() {
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
-    snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))];
+    snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))]; //Serpiente aleatoria dentro de las serpientes de su coleccion
 
     clearCanva();
     if (bodySnake.length > 0) {
