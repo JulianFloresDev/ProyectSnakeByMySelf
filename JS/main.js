@@ -50,31 +50,35 @@ const bodySnake = [],
     snakeColecction = [{
         name: "Default Snake",
         color: "#477A28",
-        speed: 105,
-        lenghtSnake: 4,
+        speed: 100,
+        startLenghtSnake: 4,
         owner: false,
-        secondaryColor: "#D8DD4A"
+        secondaryColor: "#D8DD4A",
+        url: "./Multimedia/Imagenes/Snakes/defaultSnake.png",
     }, {
         name: "Black Piton",
         color: "#0F0E0E",
-        speed: 125,
-        lenghtSnake: 6,
+        speed: 90,
+        startLenghtSnake: 6,
         owner: false,
-        secondaryColor: "#DCE85B"
+        secondaryColor: "#DCE85B",
+        url: "./Multimedia/Imagenes/Snakes/defaultSnake.png",
     }, {
         name: "Red Dragon",
         color: "#B30E09",
-        speed: 135,
-        lenghtSnake: 10,
+        speed: 120,
+        startLenghtSnake: 10,
         owner: false,
-        secondaryColor: "#CF4C05"
+        secondaryColor: "#CF4C05",
+        url: "./Multimedia/Imagenes/Snakes/defaultSnake.png",
     }, {
         name: "Blue Fish Sea Viper",
         color: "#4D86B6",
-        speed: 75,
-        lenghtSnake: 1,
+        speed: 70,
+        startLenghtSnake: 1,
         owner: false,
-        secondaryColor: "#0F0E0E"
+        secondaryColor: "#0F0E0E",
+        url: "./Multimedia/Imagenes/Snakes/BlueFishSeaViper2.png",
     }];
 
 class Player {
@@ -87,13 +91,14 @@ class Player {
     }
 };
 class Snake {
-    constructor(name, color, speed, lenghtSnake, owner, secondaryColor) {
+    constructor(name, color, speed, startLenghtSnake, owner, secondaryColor, url) {
         this.name = name;
         this.color = color;
         this.speed = speed;
-        this.lenghtSnake = lenghtSnake;
+        this.startLenghtSnake = startLenghtSnake;
         this.owner = owner;
         this.secondaryColor = secondaryColor;
+        this.url = url;
     }
 };
 class SnakeCell {
@@ -178,8 +183,11 @@ const InputVerification = (user, password) => {
     }
 
     if (user == "" || password == "") {
+
         divInvalid.innerHTML = `<p>You must enter a valid name and password.</p>`;
+
     } else if (startPlayBtn.value === 'Start Play') {
+
         let userExist = usersDataBase.find(element => element.usernameLogIn === user); //Busco un usuario que coincida con la base de datos, si existe, ejecuto lo siguiente:
 
         if (userExist !== undefined) { //Accedo si se encontró un usuario con el find()
@@ -249,12 +257,44 @@ for (const btn of selectSnakeBtn) {
 
         selectSnakeConteiner.style.display = 'flex';
 
-        snakeColecction.forEach(element, (element) => {
+        cardsConteiner.innerHTML = '';
+
+        snakeColecction.forEach(element => {
+
+            let {
+                name,
+                speed,
+                startLenghtSnake,
+                url
+            } = element;
+
             cardsConteiner.innerHTML += `
             <div class="card">
-                
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>${name}</h2>
+                    </div>
+                    <div class="img">
+                        <img src=${url} alt="">
+                    </div>
+                </div>
+
+                <div class="atributes">
+                    <div class="rows speed">
+                        <div class="card-title atributes-title">
+                            <h3>Speed: ${speed}</h3>
+                        </div>
+                        <div class="cubos"></div>
+                    </div>
+                    <div class="rows lenght">
+                        <div class="card-title atributes-title">
+                            <h3>Lenght: ${startLenghtSnake}</h3>
+                        </div>
+                        <div class="cubos"></div>
+                    </div>
+                </div>
             </div>`
-        })
+        });
     });
 };
 
@@ -289,7 +329,8 @@ function startGame() {
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
-    snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))]; //Serpiente aleatoria dentro de las serpientes de su coleccion
+    // <snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))]; //Serpiente aleatoria dentro de las serpientes de su coleccion.>
+    snakeChoice = player.snakeColecction[0];
 
     clearCanva();
     if (bodySnake.length > 0) {
@@ -302,9 +343,9 @@ function startGame() {
     clearInterval(gameInterval);
     gameInterval = setInterval(gameLoop, snakeChoice.speed);
 
-    bodySnake.unshift(new SnakeCell((snakeChoice.lenghtSnake * 10), 10, movement.RIGHT));
-    for (let i = 1; i < snakeChoice.lenghtSnake; i++) {
-        bodySnake.push(new SnakeCell((snakeChoice.lenghtSnake - i) * 10, 10, movement.RIGHT));
+    bodySnake.unshift(new SnakeCell((snakeChoice.startLenghtSnake * 10), 10, movement.RIGHT));
+    for (let i = 1; i < snakeChoice.startLenghtSnake; i++) {
+        bodySnake.push(new SnakeCell((snakeChoice.startLenghtSnake - i) * 10, 10, movement.RIGHT));
     }
 
     console.log(snakeChoice); //Ayuda a visualizar la serpiente escogida (me sirve para cuando es Aleatoria)
@@ -407,7 +448,6 @@ const movementKey = (e) => {
         bodySnake[0].vectorMov = movement.RIGHT;
     } else if (e.code === "Enter") {
         if (gameConteiner.style.display != "none") {
-
             startGame();
         }
     } else return;
@@ -453,7 +493,7 @@ const saveMaxScore = () => {
 }
 
 const ajustScore = () => {
-    let result = (bodySnake.length - snakeChoice.lenghtSnake);
+    let result = (bodySnake.length - snakeChoice.startLenghtSnake);
 
     let h3 = document.querySelector(".score h3")
     h3.remove();
@@ -470,7 +510,7 @@ const endGame = () => {
     ctx.font = "30px Righteous";
     ctx.fillText("Game over!!", 250, 68);
     ctx.fillText(`Thanks for play ${player.usernameLogIn}`, 250, 110);
-    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.lenghtSnake}`, 250, 150);
+    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.startLenghtSnake}`, 250, 150);
 
     ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
     ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
