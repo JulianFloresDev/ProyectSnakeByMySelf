@@ -268,15 +268,50 @@ td th {
     align-items: center;
     justify-content: flex-start;
     height: 90%;
+    width: 90%;
 }
 
 .card {
     width: 215px;
     height: 360px;
+    margin: 0px 5px;
     background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%);
-    mix-blend-mode: difference;
+    /* mix-blend-mode: difference; */
     border: 10px solid #2D6314;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
+.card-header{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card .atributes{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 5%;
+}
+
+.card-title{
+    margin: 10px 0px;
+}
+
+.card .img{
+    border-radius: 20px;
+}
+
+.card .atributes .rows{
+    display: block;
+    margin-left: 10px;
+    width: 100%;
+}
+
 
 .button-conteiner {
     padding: 0.35%;
