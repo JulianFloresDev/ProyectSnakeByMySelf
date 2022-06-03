@@ -36,7 +36,7 @@ header {
 }
 
 header nav {
-    background-color: #DD7D7D;
+    background: linear-gradient(270deg, #C4EF86 0%, rgba(169, 202, 120, 0) 100%);
     width: 100%;
 
     align-items: center;
@@ -253,7 +253,7 @@ td th {
     background: #81B437;
     width: 1210px;
     height: 560px;
-    border: 4px double #464A44;
+    border: 2px solid #464A44;
     border-radius: 20px;
     margin: 1%;
 
@@ -261,6 +261,8 @@ td th {
     margin-right: auto;
     justify-content: center;
     align-items: center;
+
+    background: linear-gradient(180deg, #329419 22.05%, #5e7758 100%);
 }
 
 .cards-conteiner {
@@ -275,7 +277,6 @@ td th {
     width: 215px;
     height: 360px;
     margin: 0px 5px;
-    background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%);
     border: 10px solid #2D6314;
 
     display: flex;
