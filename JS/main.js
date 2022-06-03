@@ -48,47 +48,48 @@ let gameInterval;
 const bodySnake = [],
 
     snakeColecction = [{
-        name: "Default Snake",
-        color: "#477A28",
-        speed: 115,
-        startLenghtSnake: 3,
-        owner: false,
-        secondaryColor: "#D8DD4A",
-        url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
-    }, {
-        name: "Black Manglar",
-        color: "#0F0E0E",
-        speed: 85,
-        startLenghtSnake: 5,
-        owner: false,
-        secondaryColor: "#DCE85B",
-        url: "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
-    }, {
-        name: "Red Assasin",
-        color: "#B30E09",
-        speed: 120,
-        startLenghtSnake: 10,
-        owner: false,
-        secondaryColor: "#CF4C05",
-        url: "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
-    }, {
-        name: "Blue Piton",
-        color: "#4D86B6",
-        speed: 100,
-        startLenghtSnake: 5,
-        owner: false,
-        secondaryColor: "#0F0E0E",
-        url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
-    },
-    {
-        name: "Grey Cobra",
-        color: "#61746b",
-        speed: 70,
-        startLenghtSnake: 6,
-        owner: false,
-        secondaryColor: "#5c523f",
-        url: "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
-    }];
+            name: "Default Snake",
+            color: "#477A28",
+            speed: 115,
+            startLenghtSnake: 3,
+            owner: false,
+            secondaryColor: "#D8DD4A",
+            url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
+        }, {
+            name: "Black Manglar",
+            color: "#0F0E0E",
+            speed: 85,
+            startLenghtSnake: 5,
+            owner: false,
+            secondaryColor: "#DCE85B",
+            url: "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
+        }, {
+            name: "Red Assasin",
+            color: "#B30E09",
+            speed: 120,
+            startLenghtSnake: 10,
+            owner: false,
+            secondaryColor: "#CF4C05",
+            url: "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
+        }, {
+            name: "Blue Piton",
+            color: "#4D86B6",
+            speed: 100,
+            startLenghtSnake: 5,
+            owner: false,
+            secondaryColor: "#0F0E0E",
+            url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
+        },
+        {
+            name: "Grey Cobra",
+            color: "#61746b",
+            speed: 70,
+            startLenghtSnake: 6,
+            owner: false,
+            secondaryColor: "#5c523f",
+            url: "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
+        }
+    ];
 
 class Player {
     constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
@@ -279,11 +280,12 @@ for (const btn of selectSnakeBtn) {
 
             cardsConteiner.innerHTML += `
             <div class="card">
+
                 <div class="card-header">
                     <div class="card-title">
                         <h2>${name}</h2>
                     </div>
-                    <div class="img">
+                    <div class="snake-img">
                         <img src=${url} alt="">
                     </div>
                 </div>
@@ -303,6 +305,7 @@ for (const btn of selectSnakeBtn) {
                     </div>
                 </div>
             </div>`
+
         });
     });
 };
@@ -390,8 +393,8 @@ const drawInstructions = () => {
     ctx.font = "26px Righteous";
     ctx.fillStyle = "#000";
     ctx.textAlign = "center";
-    ctx.fillText(`Hello ${player.usernameLogIn}!!`, 250, 80);
-    ctx.fillText(`Welcome to Snake Game...`, 250, 120);
+    ctx.fillText(`Welcome to Snake Game...`, 250, 80);
+    ctx.fillText(`Let's Start it! ${player.usernameLogIn}!!`, 250, 120);
     ctx.fillText(`Use arrow's key to move the Snake`, 250, 230);
     ctx.fillText(`Press 'Enter' to Start...`, 250, 270);
     ctx.fillText(`Sing In or Registrate for get Full Acces`, 250, 435);
@@ -513,18 +516,33 @@ const ajustScore = () => {
 }
 
 const endGame = () => {
+    swal({
+        title: `Game Over!!`,
+        text: `You Rock It!! ${player.usernameLogIn}.
+
+                Score: ${bodySnake.length - snakeChoice.startLenghtSnake}.
+
+                Max Score: ${player.maxScore}.
+
+                Press 'Esc' to send your Score to the Global's Scores.
+
+                Press 'Enter' to play again. Good Luck!`,
+        icon: "error",
+        timer: 3500,
+        button: false,
+    });
     clearCanva();
-    ctx.fillStyle = "#000";
-    ctx.textAlign = "center";
-    ctx.font = "30px Righteous";
-    ctx.fillText("Game over!!", 250, 68);
-    ctx.fillText(`Thanks for play ${player.usernameLogIn}`, 250, 110);
-    ctx.fillText(`Score: ${bodySnake.length - snakeChoice.startLenghtSnake}`, 250, 150);
+    // ctx.fillStyle = "#000";
+    // ctx.textAlign = "center";
+    // ctx.font = "30px Righteous";
+    // ctx.fillText("Game over!!", 250, 68);
+    // ctx.fillText(`Thanks for play ${player.usernameLogIn}`, 250, 110);
+    // ctx.fillText(`Score: ${bodySnake.length - snakeChoice.startLenghtSnake}`, 250, 150);
 
-    ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
-    ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
+    // ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
+    // ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
 
-
+    drawInstructions();
     clearInterval(gameInterval);
 
     score.innerHTML = `<h3>Score: 0</h3>`

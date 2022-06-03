@@ -275,22 +275,28 @@ td th {
     width: 215px;
     height: 360px;
     margin: 0px 5px;
-    background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%);
-    /* mix-blend-mode: difference; */
+    /* background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%); */
     border: 10px solid #2D6314;
 
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
 }
-.card-header{
+
+.card:hover {
+    margin: 0px 10px;
+    transform: scale(1.05, 1.05);
+    filter: drop-shadow(8px 8px 8px #21351d86);
+}
+
+.card-header {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
 }
 
-.card .atributes{
+.card .atributes {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -298,15 +304,16 @@ td th {
     margin-top: 5%;
 }
 
-.card-title{
+.card-title {
     margin: 10px 0px;
 }
 
-.card .img{
+.card .snake-img {
+    margin: 0px 10px;
     border-radius: 20px;
 }
 
-.card .atributes .rows{
+.card .atributes .rows {
     display: block;
     margin-left: 10px;
     width: 100%;
