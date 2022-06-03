@@ -50,13 +50,13 @@ const bodySnake = [],
     snakeColecction = [{
         name: "Default Snake",
         color: "#477A28",
-        speed: 100,
+        speed: 115,
         startLenghtSnake: 3,
         owner: false,
         secondaryColor: "#D8DD4A",
         url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
     }, {
-        name: "Black Manglar Snake",
+        name: "Black Manglar",
         color: "#0F0E0E",
         speed: 85,
         startLenghtSnake: 5,
@@ -87,7 +87,7 @@ const bodySnake = [],
         startLenghtSnake: 6,
         owner: false,
         secondaryColor: "#5c523f",
-        url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
+        url: "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
     }];
 
 class Player {
