@@ -275,7 +275,7 @@ td th {
     width: 215px;
     height: 360px;
     margin: 0px 5px;
-    /* background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%); */
+    background: linear-gradient(180deg, #31791F 22.05%, #B7CFB1 100%);
     border: 10px solid #2D6314;
 
     display: flex;
