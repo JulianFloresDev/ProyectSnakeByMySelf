@@ -15,7 +15,7 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     divScoreTable = document.querySelector(".globalScore"),
 
-    score = document.querySelector(".score"),
+    scoreDiv = document.querySelector(".score"),
 
     enterGameBtn = document.querySelector(".btn-enterGame"),
 
@@ -44,6 +44,7 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
 let snakeChoice;
 let gameInterval;
+let score = 0;
 
 const bodySnake = [],
 
@@ -338,6 +339,8 @@ scoreBtn.addEventListener("click", () => {
 // Configuración del juego y sus funcionalidades.
 
 function startGame() {
+    score = 0;
+
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
@@ -462,6 +465,8 @@ const movementKey = (e) => {
         if (gameConteiner.style.display != "none") {
             startGame();
         }
+    } else if (e.code === "Escape") {
+        pushMaxScore();
     } else return;
 }
 document.addEventListener("keydown", movementKey);
@@ -497,32 +502,32 @@ const ajustPosition = () => {
 //__________________________________________________________________________________________________________________________________________//
 
 //Condiciones de finalización y continuidad del juego.
-
+let { maxScore, usernameLogIn } = player;
 const saveMaxScore = () => {
-    if (score.value > player.maxScore) {
-
+    if (score > maxScore) {
+        maxScore = score;
     }
 }
 
+const pushMaxScore = () =>{
+
+}
+
 const ajustScore = () => {
-    let result = (bodySnake.length - snakeChoice.startLenghtSnake);
-
+    score++;
     let h3 = document.querySelector(".score h3")
-    h3.remove();
-
-    let newScore = document.createElement("h3");
-    newScore.innerHTML = `Score: ${result}`;
-    score.appendChild(newScore);
+    h3.innerHTML = `Score: ${score}`;
 }
 
 const endGame = () => {
+    saveMaxScore();
     swal({
         title: `Game Over!!`,
-        text: `You Rock It!! ${player.usernameLogIn}.
+        text: `You Rock It!! ${usernameLogIn}.
 
-                Score: ${bodySnake.length - snakeChoice.startLenghtSnake}.
+                Score: ${score}.
 
-                Max Score: ${player.maxScore}.
+                Max Score: ${maxScore}.
 
                 Press 'Esc' to send your Score to the Global's Scores.
 
@@ -532,20 +537,10 @@ const endGame = () => {
         button: false,
     });
     clearCanva();
-    // ctx.fillStyle = "#000";
-    // ctx.textAlign = "center";
-    // ctx.font = "30px Righteous";
-    // ctx.fillText("Game over!!", 250, 68);
-    // ctx.fillText(`Thanks for play ${player.usernameLogIn}`, 250, 110);
-    // ctx.fillText(`Score: ${bodySnake.length - snakeChoice.startLenghtSnake}`, 250, 150);
-
-    // ctx.fillText(`Press 'Enter' to Re-Play...`, 250, 430);
-    // ctx.fillText(`Press 'Esc' to submit Score...`, 250, 470);
-
     drawInstructions();
     clearInterval(gameInterval);
 
-    score.innerHTML = `<h3>Score: 0</h3>`
+    scoreDiv.innerHTML = `<h3>Score: 0</h3>`
 
     //Agregar puntaje a la tabla de las mejores posiciones!
     if (snakeChoice.owner) {
