@@ -110,6 +110,10 @@ nav ul li {
     right: 1%;
 }
 
+.btn-login-rigth{
+    margin-right: 2px;
+}
+
 #log-out {
     display: none;
 }
@@ -254,11 +258,11 @@ td th {
     flex-direction: column;
 
     background: #81B437;
-    width: 1210px;
-    height: 560px;
+    width: auto;
+    height: auto;
     border: 2px solid #464A44;
     border-radius: 20px;
-    margin: 1%;
+    margin-top: 5%;
 
     margin-left: auto;
     margin-right: auto;
@@ -272,14 +276,18 @@ td th {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 90%;
-    width: 90%;
+    flex-wrap: wrap;
+
+    height: auto;
+    width: auto;
+    margin: 0% 2%;
+
 }
 
 .card {
     width: 215px;
-    height: 360px;
-    margin: 0px 5px;
+    height: 10%;
+    margin: 30px 10px;
     border: 10px solid #2D6314;
 
     display: flex;
