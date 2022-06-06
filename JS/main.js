@@ -260,27 +260,29 @@ logOutBtn.addEventListener("click", () => {
 // Ingreso de datos para la seleccion de la serpiente a utilizar, y botones de usabilidad.
 
 //Para cada boton de los seleccionados con querySelectorAll le damos la opción de ocultar las opciones iniciales y mostrar el div de selección.
-for (const btn of selectSnakeBtn) {
-    btn.addEventListener("click", () => {
+buySnakeBtn.addEventListener("click", () => {
 
-        clearInterval(gameInterval);
-        gameConteiner.style.display = 'none';
+    clearInterval(gameInterval);
+    gameConteiner.style.display = 'none';
 
-        selectSnakeConteiner.style.display = 'flex';
+    selectSnakeConteiner.style.display = 'flex';
 
-        cardsConteiner.innerHTML = '';
+    cardsConteiner.innerHTML = '';
 
-        snakeColecction.forEach(element => {
+    snakeColecction.forEach(element => {
 
-            let {
-                name,
-                speed,
-                startLenghtSnake,
-                url
-            } = element;
+        let {
+            name,
+            speed,
+            startLenghtSnake,
+            url
+        } = element;
 
-            cardsConteiner.innerHTML += `
+        cardsConteiner.innerHTML += `
             <div class="card">
+                <div class="img-value">
+                    
+                </div>
 
                 <div class="card-header">
                     <div class="card-title">
@@ -307,9 +309,11 @@ for (const btn of selectSnakeBtn) {
                 </div>
             </div>`
 
-        });
     });
-};
+    console.log("funciona");
+
+});
+
 
 //Boton para iniciar la partida cuando se selecciona una snake
 playWithSelectedBtn.addEventListener("click", () => {
@@ -502,14 +506,17 @@ const ajustPosition = () => {
 //__________________________________________________________________________________________________________________________________________//
 
 //Condiciones de finalización y continuidad del juego.
-let { maxScore, usernameLogIn } = player;
+let {
+    maxScore,
+    usernameLogIn
+} = player;
 const saveMaxScore = () => {
     if (score > maxScore) {
         maxScore = score;
     }
 }
 
-const pushMaxScore = () =>{
+const pushMaxScore = () => {
 
 }
 
