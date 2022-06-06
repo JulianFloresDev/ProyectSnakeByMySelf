@@ -301,6 +301,15 @@ td th {
     filter: drop-shadow(8px 8px 8px #21351d86);
 }
 
+.card:target{
+    margin: 0px 10px;
+    transform: scale(1.05, 1.05);
+    filter: drop-shadow(8px 8px 8px #21351d86);
+    border-style: double;
+    border-color: black;
+}
+
+
 .card-header {
     display: flex;
     justify-content: flex-start;

@@ -49,6 +49,7 @@ let score = 0;
 const bodySnake = [],
 
     snakeColecction = [{
+            id: 1,
             name: "Default Snake",
             color: "#477A28",
             speed: 115,
@@ -57,6 +58,7 @@ const bodySnake = [],
             secondaryColor: "#D8DD4A",
             url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
         }, {
+            id: 2,
             name: "Black Manglar",
             color: "#0F0E0E",
             speed: 85,
@@ -65,6 +67,7 @@ const bodySnake = [],
             secondaryColor: "#DCE85B",
             url: "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
         }, {
+            id: 3,
             name: "Red Assasin",
             color: "#B30E09",
             speed: 120,
@@ -73,6 +76,7 @@ const bodySnake = [],
             secondaryColor: "#CF4C05",
             url: "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
         }, {
+            id: 4,
             name: "Blue Piton",
             color: "#4D86B6",
             speed: 100,
@@ -82,6 +86,7 @@ const bodySnake = [],
             url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
         },
         {
+            id: 5,
             name: "Grey Cobra",
             color: "#61746b",
             speed: 70,
@@ -102,7 +107,8 @@ class Player {
     }
 };
 class Snake {
-    constructor(name, color, speed, startLenghtSnake, owner, secondaryColor, url) {
+    constructor(id, name, color, speed, startLenghtSnake, owner, secondaryColor, url) {
+        this.id = id;
         this.name = name;
         this.color = color;
         this.speed = speed;
@@ -275,11 +281,12 @@ buySnakeBtn.addEventListener("click", () => {
             name,
             speed,
             startLenghtSnake,
-            url
+            url,
+            id
         } = element;
 
         cardsConteiner.innerHTML += `
-            <div class="card">
+            <a href="#card-${id}" id="card-${id}" class="card">
                 <div class="img-value">
                     
                 </div>
@@ -307,7 +314,7 @@ buySnakeBtn.addEventListener("click", () => {
                         <div class="cubos"></div>
                     </div>
                 </div>
-            </div>`
+            </a>`
 
     });
     console.log("funciona");
@@ -317,7 +324,7 @@ buySnakeBtn.addEventListener("click", () => {
 
 //Boton para iniciar la partida cuando se selecciona una snake
 playWithSelectedBtn.addEventListener("click", () => {
-
+    
     displayGame();
 });
 
