@@ -5,7 +5,7 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     gameConteiner = document.querySelector(".conteiner"),
 
-    selectSnakeBtn = document.querySelectorAll(".btn-selectSnake"),
+    selectSnakeBtn = document.querySelector(".btn-selectSnake"),
 
     buySnakeBtn = document.querySelector(".btn-buySnake"),
 
@@ -14,6 +14,8 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
     divSnakeValues = document.querySelector(".snake-values"),
 
     divScoreTable = document.querySelector(".globalScore"),
+
+    scoreTable = document.querySelector(".score-table"),
 
     scoreDiv = document.querySelector(".score"),
 
@@ -40,7 +42,6 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
     cardsConteiner = document.querySelector(".cards-conteiner"),
 
     playWithSelectedBtn = document.querySelector(".btn-playWithSelected");
-
 
 let snakeChoice;
 let gameInterval;
@@ -185,7 +186,7 @@ enterGameBtn.addEventListener("click", () => {
 });
 
 startPlayBtn.addEventListener("click", () => {
-    InputVerification(inputUsername.value, inputPassword.value);
+    InputVerification(inputUsername.value.toLowerCase(), inputPassword.value);
 });
 
 const InputVerification = (user, password) => {
@@ -266,7 +267,7 @@ logOutBtn.addEventListener("click", () => {
 // Ingreso de datos para la seleccion de la serpiente a utilizar, y botones de usabilidad.
 
 //Para cada boton de los seleccionados con querySelectorAll le damos la opción de ocultar las opciones iniciales y mostrar el div de selección.
-buySnakeBtn.addEventListener("click", () => {
+selectSnakeBtn.addEventListener("click", () => {
 
     clearInterval(gameInterval);
     gameConteiner.style.display = 'none';
@@ -286,45 +287,54 @@ buySnakeBtn.addEventListener("click", () => {
         } = element;
 
         cardsConteiner.innerHTML += `
-            <a href="#card-${id}" id="card-${id}" class="card">
-                <div class="img-value">
-                    
-                </div>
-
-                <div class="card-header">
-                    <div class="card-title">
+        <div class="card" id="card-${id}">
+            <div class="img-value">
+            
+            </div>            
+        
+            <div class="card-header">
+                <div class="card-title">
                         <h2>${name}</h2>
-                    </div>
-                    <div class="snake-img">
-                        <img src=${url} alt="">
-                    </div>
                 </div>
-
-                <div class="atributes">
-                    <div class="rows speed">
-                        <div class="card-title atributes-title">
-                            <h3>Speed: ${speed}</h3>
-                        </div>
-                        <div class="cubos"></div>
-                    </div>
-                    <div class="rows lenght">
-                        <div class="card-title atributes-title">
-                            <h3>Lenght: ${startLenghtSnake}</h3>
-                        </div>
-                        <div class="cubos"></div>
-                    </div>
+                <div class="snake-img">
+                    <img src=${url} alt="">
                 </div>
-            </a>`
-
+            </div>
+        
+            <div class="atributes">
+                <div class="rows speed">
+                    <div class="card-title atributes-title">
+                        <h3>Speed: ${speed}</h3>
+                    </div>
+                    <div class="cubos"></div>
+                </div>
+                <div class="rows lenght">
+                    <div class="card-title atributes-title">
+                        <h3>Lenght: ${startLenghtSnake}</h3>
+                    </div>
+                    <div class="cubos"></div>
+                </div>
+            </div>
+        </div>`
     });
-    console.log("funciona");
 
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(crd => {
+        crd.addEventListener("click", () => {
+            cards.forEach(c => {
+                c.classList.remove("card-clicked");
+            });
+
+            crd.classList.add("card-clicked");
+            console.log(crd);
+        })
+    })
 });
-
 
 //Boton para iniciar la partida cuando se selecciona una snake
 playWithSelectedBtn.addEventListener("click", () => {
-    
+
     displayGame();
 });
 
@@ -512,20 +522,60 @@ const ajustPosition = () => {
 
 //__________________________________________________________________________________________________________________________________________//
 
-//Condiciones de finalización y continuidad del juego.
+//Condiciones de finalización, puntaje y continuidad del juego.
 let {
-    maxScore,
+    maxScore: playerMaxScore,
     usernameLogIn
 } = player;
+
 const saveMaxScore = () => {
-    if (score > maxScore) {
-        maxScore = score;
+    if (score > playerMaxScore) {
+        //Guardo el nuevo máximo score obtenido en el objeto player actual.
+        playerMaxScore = score;
+
+        //Guardo el nuevo máximo score obtenido en la base de datos.
+        usersDataBase.find(element => element.usernameLogIn === player.usernameLogIn).maxScore = score;
+
+        //Acomodo la base de datos según los scores máximos.
+        usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
+        
+        //Elimino la base de datos antigua y la sobre escribo con la actualizada.
+        localStorage.removeItem("usersDataBase");
+        saveNewData("usersDataBase", usersDataBase)
     }
 }
 
 const pushMaxScore = () => {
+    saveMaxScore();
+    scoreTable.innerHTML = `
+        <tr>
+            <th>N°</th>
+            <th>Player</th>
+            <th>Score</th>
+        </tr>
+        <tr>
+            <td class="position">1--</td>
+            <td class="playerName">Player One</td>
+            <td class="number">9.999.999</td>
+        </tr>`;
 
-}
+    let positionCount = 2;
+
+    usersDataBase.forEach(element => {
+        let {
+            usernameLogIn,
+            maxScore
+        } = element;
+
+        scoreTable.innerHTML += `
+            <tr>
+                <td class="position">${positionCount++}--</td>
+                <td class="playerName">${usernameLogIn}</td>
+                <td class="number">${maxScore}</td>
+            </tr>`;
+    })
+};
+pushMaxScore();
 
 const ajustScore = () => {
     score++;
@@ -541,9 +591,9 @@ const endGame = () => {
 
                 Score: ${score}.
 
-                Max Score: ${maxScore}.
+                Max Score: ${playerMaxScore}.
 
-                Press 'Esc' to send your Score to the Global's Scores.
+                Press 'Esc' to send your Score to the Global's usersDataBase.
 
                 Press 'Enter' to play again. Good Luck!`,
         icon: "error",
@@ -555,11 +605,6 @@ const endGame = () => {
     clearInterval(gameInterval);
 
     scoreDiv.innerHTML = `<h3>Score: 0</h3>`
-
-    //Agregar puntaje a la tabla de las mejores posiciones!
-    if (snakeChoice.owner) {
-
-    }
 }
 
 const checkPosition = () => {

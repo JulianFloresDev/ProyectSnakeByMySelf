@@ -4,6 +4,7 @@
     margin: 0px;
 
     list-style: none;
+    text-decoration: none;
 
     padding: 0;
     margin: 0;
@@ -56,9 +57,6 @@ nav ul li {
 }
 
 .btn {
-    text-decoration: none;
-    list-style: none;
-
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -298,17 +296,16 @@ td th {
 .card:hover {
     margin: 0px 10px;
     transform: scale(1.05, 1.05);
-    filter: drop-shadow(8px 8px 8px #21351d86);
+    filter: drop-shadow(5px 5px 5px #21351d86);
 }
 
-.card:target{
+.card-clicked{
+    border-style: ridge;
+    border-color: #74ad57;
     margin: 0px 10px;
-    transform: scale(1.05, 1.05);
-    filter: drop-shadow(8px 8px 8px #21351d86);
-    border-style: double;
-    border-color: black;
+    transform: scale(1, 1);
+    filter: drop-shadow(5px 5px 5px #21351d86);
 }
-
 
 .card-header {
     display: flex;
