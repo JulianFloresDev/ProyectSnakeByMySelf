@@ -47,56 +47,56 @@ let snakeChoice;
 let gameInterval;
 let score = 0;
 
-const bodySnake = [],
+const bodySnake = [];
 
-    snakeColecction = [{
-            id: 1,
-            name: "Default Snake",
-            color: "#477A28",
-            speed: 115,
-            startLenghtSnake: 3,
-            owner: false,
-            secondaryColor: "#D8DD4A",
-            url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
-        }, {
-            id: 2,
-            name: "Black Manglar",
-            color: "#0F0E0E",
-            speed: 85,
-            startLenghtSnake: 5,
-            owner: false,
-            secondaryColor: "#DCE85B",
-            url: "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
-        }, {
-            id: 3,
-            name: "Red Assasin",
-            color: "#B30E09",
-            speed: 120,
-            startLenghtSnake: 10,
-            owner: false,
-            secondaryColor: "#CF4C05",
-            url: "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
-        }, {
-            id: 4,
-            name: "Blue Piton",
-            color: "#4D86B6",
-            speed: 100,
-            startLenghtSnake: 5,
-            owner: false,
-            secondaryColor: "#0F0E0E",
-            url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
-        },
-        {
-            id: 5,
-            name: "Grey Cobra",
-            color: "#61746b",
-            speed: 70,
-            startLenghtSnake: 6,
-            owner: false,
-            secondaryColor: "#5c523f",
-            url: "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
-        }
-    ];
+// snakeColecction = [{
+//         id: 1,
+//         name: "Default Snake",
+//         color: "#477A28",
+//         speed: 115,
+//         startLenghtSnake: 3,
+//         owner: false,
+//         secondaryColor: "#D8DD4A",
+//         url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
+//     }, {
+//         id: 2,
+//         name: "Black Manglar",
+//         color: "#0F0E0E",
+//         speed: 85,
+//         startLenghtSnake: 5,
+//         owner: false,
+//         secondaryColor: "#DCE85B",
+//         url: "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
+//     }, {
+//         id: 3,
+//         name: "Red Assasin",
+//         color: "#B30E09",
+//         speed: 120,
+//         startLenghtSnake: 10,
+//         owner: false,
+//         secondaryColor: "#CF4C05",
+//         url: "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
+//     }, {
+//         id: 4,
+//         name: "Blue Piton",
+//         color: "#4D86B6",
+//         speed: 100,
+//         startLenghtSnake: 5,
+//         owner: false,
+//         secondaryColor: "#0F0E0E",
+//         url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
+//     },
+//     {
+//         id: 5,
+//         name: "Grey Cobra",
+//         color: "#61746b",
+//         speed: 70,
+//         startLenghtSnake: 6,
+//         owner: false,
+//         secondaryColor: "#5c523f",
+//         url: "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
+//     }
+// ];
 
 class Player {
     constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
@@ -137,6 +137,18 @@ let food = {
     y: Math.round(Math.random() * 47 + 1) * (10),
 }
 
+//__________________________________________________________________________________________________________________________________________//
+//                                          Carga de Datos del snakesDB.json
+//__________________________________________________________________________________________________________________________________________//
+
+const getDB = async () => {
+    const resp = await fetch('./snakesDB.json');
+
+    const data = await resp.json();
+
+    return snakeColecction = [...data]
+};
+getDB();
 //__________________________________________________________________________________________________________________________________________//
 
 //                                       Inicio de Sesión y Registro del Usuario
@@ -538,7 +550,7 @@ const saveMaxScore = () => {
 
         //Acomodo la base de datos según los scores máximos.
         usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
-        
+
         //Elimino la base de datos antigua y la sobre escribo con la actualizada.
         localStorage.removeItem("usersDataBase");
         saveNewData("usersDataBase", usersDataBase)
