@@ -544,11 +544,11 @@ let {
 } = player;
 
 const saveMaxScore = () => {
-    if (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) {
-        if (score > playerMaxScore) {
-            //Guardo el nuevo máximo score obtenido en el objeto player actual.
-            playerMaxScore = score;
+    if (score > playerMaxScore) {
+        //Guardo el nuevo máximo score obtenido en el objeto player actual.
+        playerMaxScore = score;
 
+        if (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) {
             //Guardo el nuevo máximo score obtenido en la base de datos.
             usersDataBase.find(element => element.usernameLogIn === player.usernameLogIn).maxScore = score;
 
@@ -557,16 +557,19 @@ const saveMaxScore = () => {
 
             //Elimino la base de datos antigua y la sobre escribo con la actualizada.
             localStorage.removeItem("usersDataBase");
-            saveNewData("usersDataBase", usersDataBase)
+            saveNewData("usersDataBase", usersDataBase);
+        } else {
+            swal({
+                title: "Enter Game First",
+                text: "You have to have an account for that!!",
+                icon: "warning",
+                timer: 1000,
+                button: false,
+            });
         }
-    } else {
-        swal({
-            title: "Enter Game First",
-
-            icon: "warning",
-        });
     }
 }
+
 
 const pushMaxScore = () => {
     saveMaxScore();
