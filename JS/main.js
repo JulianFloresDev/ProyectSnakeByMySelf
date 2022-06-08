@@ -47,7 +47,9 @@ let snakeChoice;
 let gameInterval;
 let score = 0;
 
-const bodySnake = [];
+const bodySnake = [],
+
+    snakeColecction = [];
 
 // snakeColecction = [{
 //         id: 1,
@@ -146,14 +148,15 @@ const getDB = async () => {
 
     const data = await resp.json();
 
-    return snakeColecction = [...data]
+    data.forEach(element => {
+        snakeColecction.push(element)
+    })
 };
 getDB();
 //__________________________________________________________________________________________________________________________________________//
 
 //                                       Inicio de Sesión y Registro del Usuario
 //__________________________________________________________________________________________________________________________________________//
-
 let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, 0);
 
 snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))];
@@ -541,19 +544,27 @@ let {
 } = player;
 
 const saveMaxScore = () => {
-    if (score > playerMaxScore) {
-        //Guardo el nuevo máximo score obtenido en el objeto player actual.
-        playerMaxScore = score;
+    if (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) {
+        if (score > playerMaxScore) {
+            //Guardo el nuevo máximo score obtenido en el objeto player actual.
+            playerMaxScore = score;
 
-        //Guardo el nuevo máximo score obtenido en la base de datos.
-        usersDataBase.find(element => element.usernameLogIn === player.usernameLogIn).maxScore = score;
+            //Guardo el nuevo máximo score obtenido en la base de datos.
+            usersDataBase.find(element => element.usernameLogIn === player.usernameLogIn).maxScore = score;
 
-        //Acomodo la base de datos según los scores máximos.
-        usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
+            //Acomodo la base de datos según los scores máximos.
+            usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
 
-        //Elimino la base de datos antigua y la sobre escribo con la actualizada.
-        localStorage.removeItem("usersDataBase");
-        saveNewData("usersDataBase", usersDataBase)
+            //Elimino la base de datos antigua y la sobre escribo con la actualizada.
+            localStorage.removeItem("usersDataBase");
+            saveNewData("usersDataBase", usersDataBase)
+        }
+    } else {
+        swal({
+            title: "Enter Game First",
+
+            icon: "warning",
+        });
     }
 }
 
