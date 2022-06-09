@@ -108,7 +108,7 @@ nav ul li {
     right: 1%;
 }
 
-.btn-login-rigth{
+.btn-login-rigth {
     margin-right: 2px;
 }
 
@@ -251,7 +251,7 @@ td th {
     padding: 8px;
 }
 
-.selectSnake-conteiner {
+.conteinerSnakes-display-none {
     display: none;
     flex-direction: column;
 
@@ -299,7 +299,7 @@ td th {
     filter: drop-shadow(5px 5px 5px #21351d86);
 }
 
-.card-clicked{
+.card-clicked {
     border-style: ridge;
     border-color: #74ad57;
     margin: 0px 10px;

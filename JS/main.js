@@ -39,9 +39,15 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     selectSnakeConteiner = document.querySelector(".selectSnake-conteiner"),
 
-    cardsConteiner = document.querySelector(".cards-conteiner"),
+    selectCardsConteiner = document.querySelector(".select-cards-conteiner"),
 
-    playWithSelectedBtn = document.querySelector(".btn-playWithSelected");
+    playWithSelectedBtn = document.querySelector(".btn-playWithSelected"),
+
+    buySnakeConteiner = document.querySelector(".buySnake-conteiner"),
+
+    buyCardsConteiner = document.querySelector(".buy-cards-conteiner"),
+
+    buySelectedBtn = document.querySelector(".btn-buySelected");
 
 let snakeChoice;
 let gameInterval;
@@ -197,7 +203,7 @@ const InputVerification = (user, password) => {
 
         }
     } else { //Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
-        
+
         player = new Player(user, password, null, [snakeColecction[0]], 0);
 
         //Guardamos los datos del usuario dentro del Array de usuarios válidos para ingresar del LocalStorage.
@@ -232,18 +238,41 @@ logOutBtn.addEventListener("click", () => {
     drawInstructions();
 });
 
+//El siguiente bloque muestra y oculta el "Global Score".
+let btnScoreClicked = false;
+scoreBtn.addEventListener("click", () => {
+    switch (btnScoreClicked) {
+        case false:
+            divScoreTable.style.display = "flex";
+            btnScoreClicked = true;
+            break;
+
+        case true:
+            divScoreTable.style.display = "none";
+            btnScoreClicked = false;
+            break;
+    }
+});
 //__________________________________________________________________________________________________________________________________________//
-// Ingreso de datos para la seleccion de la serpiente a utilizar, y botones de usabilidad.
+//                           Seleccion de la serpiente a utilizar!
+//__________________________________________________________________________________________________________________________________________//
+
+//Boton para iniciar la partida cuando se selecciona una snake.
+playWithSelectedBtn.addEventListener("click", () => {
+
+    displayGame();
+});
 
 //Para cada boton de los seleccionados con querySelectorAll le damos la opción de ocultar las opciones iniciales y mostrar el div de selección.
 selectSnakeBtn.addEventListener("click", () => {
 
     clearInterval(gameInterval);
     gameConteiner.style.display = 'none';
+    buySnakeConteiner.style.display = 'none';
 
     selectSnakeConteiner.style.display = 'flex';
 
-    cardsConteiner.innerHTML = '';
+    selectCardsConteiner.innerHTML = '';
 
     player.snakeColecction.forEach(element => {
 
@@ -255,7 +284,7 @@ selectSnakeBtn.addEventListener("click", () => {
             id
         } = element;
 
-        cardsConteiner.innerHTML += `
+        selectCardsConteiner.innerHTML += `
         <div class="card" id="card-${id}">
             <div class="img-value">
             
@@ -301,28 +330,81 @@ selectSnakeBtn.addEventListener("click", () => {
     })
 });
 
-//Boton para iniciar la partida cuando se selecciona una snake
-playWithSelectedBtn.addEventListener("click", () => {
+//__________________________________________________________________________________________________________________________________________//
+//                                Compra de una nueva serpiente!
+//__________________________________________________________________________________________________________________________________________//
+
+//Boton para comprar la serpiente seleccionada y añadirla a la colección.
+buySelectedBtn.addEventListener("click", () => {
 
     displayGame();
 });
 
-//El siguiente bloque muestra y oculta el "Global Score".
-let btnScoreClicked = false;
-scoreBtn.addEventListener("click", () => {
-    switch (btnScoreClicked) {
-        case false:
-            divScoreTable.style.display = "flex";
-            btnScoreClicked = true;
-            break;
+//Marketplace
+buySnakeBtn.addEventListener("click", () => {
+    clearInterval(gameInterval);
+    gameConteiner.style.display = 'none';
+    selectSnakeConteiner.style.display = 'none';
 
-        case true:
-            divScoreTable.style.display = "none";
-            btnScoreClicked = false;
-            break;
-    }
-});
+    buySnakeConteiner.style.display = 'flex';
 
+    buyCardsConteiner.innerHTML = '';
+
+    snakeColecction.forEach(element => {
+
+        let {
+            name,
+            speed,
+            startLenghtSnake,
+            url,
+            id
+        } = element;
+
+        buyCardsConteiner.innerHTML += `
+        <div class="card" id="card-${id}">
+            <div class="img-value">
+            
+            </div>            
+        
+            <div class="card-header">
+                <div class="card-title">
+                        <h2>${name}</h2>
+                </div>
+                <div class="snake-img">
+                    <img src=${url} alt="">
+                </div>
+            </div>
+        
+            <div class="atributes">
+                <div class="rows speed">
+                    <div class="card-title atributes-title">
+                        <h3>Speed: ${speed}</h3>
+                    </div>
+                    <div class="cubos"></div>
+                </div>
+                <div class="rows lenght">
+                    <div class="card-title atributes-title">
+                        <h3>Lenght: ${startLenghtSnake}</h3>
+                    </div>
+                    <div class="cubos"></div>
+                </div>
+            </div>
+        </div>`
+    });
+
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(crd => {
+        crd.addEventListener("click", () => {
+            cards.forEach(c => {
+                c.classList.remove("card-clicked");
+            });
+
+            crd.classList.add("card-clicked");
+            console.log(crd.id);
+        })
+    })
+})
 
 //Hasta acá el código corresponde a la identificación del usuario y el ingreso de su 'Snake'
 //__________________________________________________________________________________________________________________________________________//
@@ -504,7 +586,7 @@ const saveMaxScore = () => {
 
             //Acomodo la base de datos según los scores máximos.
             usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
-            
+
             //Elimino la base de datos antigua y la sobre escribo con la actualizada.
             localStorage.removeItem("usersDataBase");
             saveNewData("usersDataBase", usersDataBase);
