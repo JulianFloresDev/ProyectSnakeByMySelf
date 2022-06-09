@@ -538,15 +538,11 @@ const ajustPosition = () => {
 //__________________________________________________________________________________________________________________________________________//
 
 //Condiciones de finalización, puntaje y continuidad del juego.
-let {
-    maxScore: playerMaxScore,
-    usernameLogIn
-} = player;
 
 const saveMaxScore = () => {
-    if (score > playerMaxScore) {
+    if (score > player.maxScore) {
         //Guardo el nuevo máximo score obtenido en el objeto player actual.
-        playerMaxScore = score;
+        player.maxScore = score;
 
         if (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) {
             //Guardo el nuevo máximo score obtenido en la base de datos.
@@ -554,7 +550,7 @@ const saveMaxScore = () => {
 
             //Acomodo la base de datos según los scores máximos.
             usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
-
+            
             //Elimino la base de datos antigua y la sobre escribo con la actualizada.
             localStorage.removeItem("usersDataBase");
             saveNewData("usersDataBase", usersDataBase);
@@ -570,9 +566,7 @@ const saveMaxScore = () => {
     }
 }
 
-
 const pushMaxScore = () => {
-    saveMaxScore();
     scoreTable.innerHTML = `
         <tr>
             <th>N°</th>
@@ -585,23 +579,18 @@ const pushMaxScore = () => {
             <td class="number">9.999.999</td>
         </tr>`;
 
-    let positionCount = 2;
+    let positionCount = 1;
 
     usersDataBase.forEach(element => {
-        let {
-            usernameLogIn,
-            maxScore
-        } = element;
 
         scoreTable.innerHTML += `
             <tr>
-                <td class="position">${positionCount++}--</td>
-                <td class="playerName">${usernameLogIn}</td>
-                <td class="number">${maxScore}</td>
+                <td class="position">${++positionCount}--</td>
+                <td class="playerName">${element.usernameLogIn}</td>
+                <td class="number">${element.maxScore}</td>
             </tr>`;
     })
 };
-pushMaxScore();
 
 const ajustScore = () => {
     score++;
@@ -611,13 +600,14 @@ const ajustScore = () => {
 
 const endGame = () => {
     saveMaxScore();
+    pushMaxScore();
     swal({
         title: `Game Over!!`,
-        text: `You Rock It!! ${usernameLogIn}.
+        text: `You Rock It!! ${player.usernameLogIn}.
 
                 Score: ${score}.
 
-                Max Score: ${playerMaxScore}.
+                Max Score: ${player.maxScore}.
 
                 Press 'Esc' to send your Score to the Global's usersDataBase.
 
