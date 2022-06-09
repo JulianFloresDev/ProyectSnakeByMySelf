@@ -188,6 +188,8 @@ const displayGame = () => {
 
 enterGameBtn.addEventListener("click", () => {
 
+    clearInterval(gameInterval);
+
     sesionStartOptions.style.display = "flex";
 
     inputUsername.focus();
