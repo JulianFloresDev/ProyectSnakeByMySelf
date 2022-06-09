@@ -325,7 +325,7 @@ selectSnakeBtn.addEventListener("click", () => {
             });
 
             crd.classList.add("card-clicked");
-            console.log(crd);
+            console.log(crd.id);
         })
     })
 });
