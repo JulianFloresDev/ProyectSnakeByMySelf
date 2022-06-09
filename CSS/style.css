@@ -278,14 +278,14 @@ td th {
 
     height: auto;
     width: auto;
-    margin: 0% 2%;
+    margin: 2% 2%;
 
 }
 
 .card {
     width: 215px;
     height: 10%;
-    margin: 30px 10px;
+    margin: 15px 10px;
     border: 10px solid #2D6314;
 
     display: flex;
@@ -294,7 +294,7 @@ td th {
 }
 
 .card:hover {
-    margin: 0px 10px;
+    margin: 15px 10px;
     transform: scale(1.05, 1.05);
     filter: drop-shadow(5px 5px 5px #21351d86);
 }

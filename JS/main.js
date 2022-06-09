@@ -51,55 +51,6 @@ const bodySnake = [],
 
     snakeColecction = [];
 
-// snakeColecction = [{
-//         id: 1,
-//         name: "Default Snake",
-//         color: "#477A28",
-//         speed: 115,
-//         startLenghtSnake: 3,
-//         owner: false,
-//         secondaryColor: "#D8DD4A",
-//         url: "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
-//     }, {
-//         id: 2,
-//         name: "Black Manglar",
-//         color: "#0F0E0E",
-//         speed: 85,
-//         startLenghtSnake: 5,
-//         owner: false,
-//         secondaryColor: "#DCE85B",
-//         url: "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
-//     }, {
-//         id: 3,
-//         name: "Red Assasin",
-//         color: "#B30E09",
-//         speed: 120,
-//         startLenghtSnake: 10,
-//         owner: false,
-//         secondaryColor: "#CF4C05",
-//         url: "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
-//     }, {
-//         id: 4,
-//         name: "Blue Piton",
-//         color: "#4D86B6",
-//         speed: 100,
-//         startLenghtSnake: 5,
-//         owner: false,
-//         secondaryColor: "#0F0E0E",
-//         url: "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
-//     },
-//     {
-//         id: 5,
-//         name: "Grey Cobra",
-//         color: "#61746b",
-//         speed: 70,
-//         startLenghtSnake: 6,
-//         owner: false,
-//         secondaryColor: "#5c523f",
-//         url: "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
-//     }
-// ];
-
 class Player {
     constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
         this.usernameLogIn = usernameLogIn;
@@ -244,10 +195,11 @@ const InputVerification = (user, password) => {
                 <p>Try to Sing Up first!</p>`;
             startPlayBtn.value = 'Sing Up';
 
-            player = new Player(user, password, null, snakeColecction, 0);
-            return player
         }
     } else { //Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
+        
+        player = new Player(user, password, null, [snakeColecction[0]], 0);
+
         //Guardamos los datos del usuario dentro del Array de usuarios válidos para ingresar del LocalStorage.
         usersDataBase.push(player);
         localStorage.removeItem("usersDataBase");
@@ -293,7 +245,7 @@ selectSnakeBtn.addEventListener("click", () => {
 
     cardsConteiner.innerHTML = '';
 
-    snakeColecction.forEach(element => {
+    player.snakeColecction.forEach(element => {
 
         let {
             name,
@@ -382,8 +334,8 @@ function startGame() {
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
-    // <snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))]; //Serpiente aleatoria dentro de las serpientes de su coleccion.>
-    snakeChoice = player.snakeColecction[0];
+    snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]; //Serpiente aleatoria dentro de las serpientes de su coleccion.>
+    // snakeChoice = player.snakeColecction[0];
 
     clearCanva();
     if (bodySnake.length > 0) {
