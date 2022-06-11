@@ -1,5 +1,5 @@
 [{
-        "id": 0,
+        "id": 1,
         "name": "Default Snake",
         "color": "#477A28",
         "speed": 115,
@@ -8,7 +8,7 @@
         "secondaryColor": "#D8DD4A",
         "url": "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png"
     }, {
-        "id": 1,
+        "id": 2,
         "name": "Black Manglar",
         "color": "#0F0E0E",
         "speed": 85,
@@ -17,7 +17,7 @@
         "secondaryColor": "#DCE85B",
         "url": "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png"
     }, {
-        "id": 2,
+        "id": 3,
         "name": "Red Assasin",
         "color": "#B30E09",
         "speed": 120,
@@ -26,7 +26,7 @@
         "secondaryColor": "#CF4C05",
         "url": "./Multimedia/Imagenes/1-Snakes/RedPiton.png"
     }, {
-        "id": 3,
+        "id": 4,
         "name": "Blue Piton",
         "color": "#4D86B6",
         "speed": 100,
@@ -36,7 +36,7 @@
         "url": "./Multimedia/Imagenes/1-Snakes/BluePiton.png"
     },
     {
-        "id": 4,
+        "id": 5,
         "name": "Grey Cobra",
         "color": "#61746b",
         "speed": 70,

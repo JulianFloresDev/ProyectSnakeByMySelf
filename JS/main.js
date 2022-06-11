@@ -129,6 +129,7 @@ const displayGame = () => {
     sesionStartOptions.style.display = "none";
     enterGameBtn.style.display = "none";
     selectSnakeConteiner.style.display = "none";
+    buySnakeConteiner.style.display = "none";
 
     logOutBtn.style.display = "flex";
     gameConteiner.style.display = "flex";
@@ -170,6 +171,7 @@ const InputVerification = (user, password) => {
         if (checkBtn.checked) {
             //Guardamos los datos del usuario dentro del Objeto userSingIn y luego en el SesionStorage, para volver a ingresar en el momento.
             userSingIn.push(player);
+            sessionStorage.clear();
             sessionStorage.setItem("userSingIn", JSON.stringify(userSingIn));
         }
     }
@@ -285,7 +287,7 @@ selectSnakeBtn.addEventListener("click", () => {
         } = element;
 
         selectCardsConteiner.innerHTML += `
-        <div class="card" id="card-${id}">
+        <div class="card" id="${id-1}">
             <div class="img-value">
             
             </div>            
@@ -323,9 +325,10 @@ selectSnakeBtn.addEventListener("click", () => {
             cards.forEach(c => {
                 c.classList.remove("card-clicked");
             });
-
             crd.classList.add("card-clicked");
+
             console.log(crd.id);
+            snakeChoice = snakeColecction[crd.id];
         })
     })
 });
@@ -335,10 +338,15 @@ selectSnakeBtn.addEventListener("click", () => {
 //__________________________________________________________________________________________________________________________________________//
 
 //Boton para comprar la serpiente seleccionada y añadirla a la colección.
-buySelectedBtn.addEventListener("click", () => {
+buySelectedBtn.addEventListener("click",()=>{
+    const target = document.getElementsByClassName("card-clicked");
+    console.log(target[0].id);
+    console.log(player.snakeColecction.some(element=> element.id == target[0].id));
+    (player.snakeColecction.some(element=> element.id == target[0].id)) ? displayGame() : player.snakeColecction.push(snakeColecction[target[0].id - 1]);
+    console.log(player.snakeColecction);
 
     displayGame();
-});
+})
 
 //Marketplace
 buySnakeBtn.addEventListener("click", () => {
@@ -349,6 +357,8 @@ buySnakeBtn.addEventListener("click", () => {
     buySnakeConteiner.style.display = 'flex';
 
     buyCardsConteiner.innerHTML = '';
+
+    //Definir un array separado de lacoleccion total y no pintgar las que coincidan con las que ya tiene
 
     snakeColecction.forEach(element => {
 
@@ -361,7 +371,7 @@ buySnakeBtn.addEventListener("click", () => {
         } = element;
 
         buyCardsConteiner.innerHTML += `
-        <div class="card" id="card-${id}">
+        <div class="card" id="${id}">
             <div class="img-value">
             
             </div>            
@@ -404,19 +414,19 @@ buySnakeBtn.addEventListener("click", () => {
             console.log(crd.id);
         })
     })
-})
+});
 
 //Hasta acá el código corresponde a la identificación del usuario y el ingreso de su 'Snake'
 //__________________________________________________________________________________________________________________________________________//
 // Configuración del juego y sus funcionalidades.
 
-function startGame() {
+function startGame(playername) {
     score = 0;
 
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
-    snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]; //Serpiente aleatoria dentro de las serpientes de su coleccion.>
+    (!usersDataBase.some(element => element.usernameLogIn == playername)) && (snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]); //En caso de que no sea un usuario registrado se selecciona una serpiente aleatoria dentro de las serpientes de la base de datos; y sino se selecciona la serpiente por Default.
     // snakeChoice = player.snakeColecction[0];
 
     clearCanva();
@@ -535,7 +545,7 @@ const movementKey = (e) => {
         bodySnake[0].vectorMov = movement.RIGHT;
     } else if (e.code === "Enter") {
         if (gameConteiner.style.display != "none") {
-            startGame();
+            startGame(player.usernameLogIn);
         }
     } else if (e.code === "Escape") {
         pushMaxScore();
