@@ -302,7 +302,7 @@ td th {
 .card-clicked {
     border-style: ridge;
     border-color: #74ad57;
-    margin: 0px 10px;
+    margin: 15px 10px;
     transform: scale(1, 1);
     filter: drop-shadow(5px 5px 5px #21351d86);
 }
