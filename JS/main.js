@@ -340,10 +340,9 @@ selectSnakeBtn.addEventListener("click", () => {
 //Boton para comprar la serpiente seleccionada y añadirla a la colección.
 buySelectedBtn.addEventListener("click",()=>{
     const target = document.getElementsByClassName("card-clicked");
-    console.log(target[0].id);
-    console.log(player.snakeColecction.some(element=> element.id == target[0].id));
+
     (player.snakeColecction.some(element=> element.id == target[0].id)) ? displayGame() : player.snakeColecction.push(snakeColecction[target[0].id - 1]);
-    console.log(player.snakeColecction);
+
 
     displayGame();
 })
@@ -357,8 +356,10 @@ buySnakeBtn.addEventListener("click", () => {
     buySnakeConteiner.style.display = 'flex';
 
     buyCardsConteiner.innerHTML = '';
-
+    
     //Definir un array separado de lacoleccion total y no pintgar las que coincidan con las que ya tiene
+    let missingsCards = [];
+    console.log(missingsCards);
 
     snakeColecction.forEach(element => {
 
