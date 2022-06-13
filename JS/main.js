@@ -58,12 +58,13 @@ const bodySnake = [],
     snakeColecction = [];
 
 class Player {
-    constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore) {
+    constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore, money) {
         this.usernameLogIn = usernameLogIn;
         this.passwordLogIn = passwordLogIn;
         this.cardRegistered = cardRegistered;
         this.snakeColecction = snakeColecction;
         this.maxScore = maxScore;
+        this.money = money;
     }
 };
 class Snake {
@@ -114,7 +115,7 @@ getDB();
 
 //                                       Inicio de Sesión y Registro del Usuario
 //__________________________________________________________________________________________________________________________________________//
-let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, 0);
+let player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, 0, 0);
 
 snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction.length - 1))];
 
@@ -206,7 +207,7 @@ const InputVerification = (user, password) => {
         }
     } else { //Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
 
-        player = new Player(user, password, null, [snakeColecction[0]], 0);
+        player = new Player(user, password, null, [snakeColecction[0]], 0, 0);
 
         //Guardamos los datos del usuario dentro del Array de usuarios válidos para ingresar del LocalStorage.
         usersDataBase.push(player);
@@ -230,7 +231,7 @@ logOutBtn.addEventListener("click", () => {
     enterGameBtn.style.display = "flex";
     //Limpiar los valores ingresados para solamente guardarlos en caso de que el usuario lo pida
 
-    player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, null);
+    player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, null, 0);
 
     inputUsername.value = "";
     inputPassword.value = "";
@@ -340,9 +341,18 @@ selectSnakeBtn.addEventListener("click", () => {
 //Boton para comprar la serpiente seleccionada y añadirla a la colección.
 buySelectedBtn.addEventListener("click",()=>{
     const target = document.getElementsByClassName("card-clicked");
-
-    (player.snakeColecction.some(element=> element.id == target[0].id)) ? displayGame() : player.snakeColecction.push(snakeColecction[target[0].id - 1]);
-
+    
+    if(snakeColecction[target[0].id - 1].price <= player.money){
+        (player.snakeColecction.some(element=> element.id == target[0].id)) ? displayGame() : player.snakeColecction.push(snakeColecction[target[0].id - 1]);
+        player.money -= snakeColecction[target[0].id - 1].price;
+    } else {
+        swal({
+            title: 'Insuficient money',
+            text: `Try to play some matchs and earn more money
+            It's easy: 1 point = 1 coin`,
+            icon: 'warning,
+        });
+    }
 
     displayGame();
 })
