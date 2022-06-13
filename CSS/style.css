@@ -56,6 +56,13 @@ nav ul li {
     display: flex;
 }
 
+.conteiner-all {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn {
     justify-content: center;
     align-items: center;
@@ -185,7 +192,6 @@ nav ul li {
 }
 
 .conteiner {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -193,42 +199,38 @@ nav ul li {
 }
 
 .score {
-    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 15px 0px;
     color: #81B437;
-    position: absolute;
     letter-spacing: 4px;
 
 }
 
+.score h3 {
+    margin: 0px 15px;
+}
+
 .game {
-    position: absolute;
     display: flex;
     flex-direction: column;
-
     border-radius: 20px;
-    margin-top: 40px;
 }
 
 .canvasGame {
-    position: flex;
     display: flex;
     border: 1px solid black;
 }
 
 .globalScore {
     display: none;
-    position: absolute;
-    z-index: 40;
     background-color: #81B437;
-
-    margin-top: 103px;
-    top: 0px;
-    right: 1%;
-
 
     border: 4px double #000;
     width: 28%;
-    margin-left: auto;
+    margin-top: flex;
+    margin-left: 2%;
 
 }
 
@@ -278,8 +280,6 @@ td th {
 
     height: auto;
     width: auto;
-    margin: 2% 2%;
-
 }
 
 .card {

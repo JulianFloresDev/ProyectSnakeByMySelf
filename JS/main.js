@@ -339,18 +339,18 @@ selectSnakeBtn.addEventListener("click", () => {
 //__________________________________________________________________________________________________________________________________________//
 
 //Boton para comprar la serpiente seleccionada y añadirla a la colección.
-buySelectedBtn.addEventListener("click",()=>{
+buySelectedBtn.addEventListener("click", () => {
     const target = document.getElementsByClassName("card-clicked");
-    
-    if(snakeColecction[target[0].id - 1].price <= player.money){
-        (player.snakeColecction.some(element=> element.id == target[0].id)) ? displayGame() : player.snakeColecction.push(snakeColecction[target[0].id - 1]);
+
+    if (snakeColecction[target[0].id - 1].price <= player.money) {
+        (player.snakeColecction.some(element => element.id == target[0].id)) ? displayGame(): player.snakeColecction.push(snakeColecction[target[0].id - 1]);
         player.money -= snakeColecction[target[0].id - 1].price;
     } else {
         swal({
             title: 'Insuficient money',
             text: `Try to play some matchs and earn more money
             It's easy: 1 point = 1 coin`,
-            icon: 'warning,
+            icon: 'warning',
         });
     }
 
@@ -366,7 +366,7 @@ buySnakeBtn.addEventListener("click", () => {
     buySnakeConteiner.style.display = 'flex';
 
     buyCardsConteiner.innerHTML = '';
-    
+
     //Definir un array separado de lacoleccion total y no pintgar las que coincidan con las que ya tiene
     let missingsCards = [];
     console.log(missingsCards);
@@ -559,7 +559,13 @@ const movementKey = (e) => {
             startGame(player.usernameLogIn);
         }
     } else if (e.code === "Escape") {
-        pushMaxScore();
+        (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) ? pushMaxScore(): swal({
+            title: "Enter Game First",
+            text: "You have to have an account for that!!",
+            icon: "warning",
+            timer: 2000,
+            button: false
+        });
     } else return;
 }
 document.addEventListener("keydown", movementKey);
@@ -611,15 +617,9 @@ const saveMaxScore = () => {
             //Elimino la base de datos antigua y la sobre escribo con la actualizada.
             localStorage.removeItem("usersDataBase");
             saveNewData("usersDataBase", usersDataBase);
-        } else {
-            swal({
-                title: "Enter Game First",
-                text: "You have to have an account for that!!",
-                icon: "warning",
-                timer: 1000,
-                button: false,
-            });
-        }
+
+            pushMaxScore();
+        };
     }
 }
 
@@ -648,16 +648,22 @@ const pushMaxScore = () => {
             </tr>`;
     })
 };
+pushMaxScore();
 
 const ajustScore = () => {
     score++;
-    let h3 = document.querySelector(".score h3")
-    h3.innerHTML = `Score: ${score}`;
+    let h3Score = document.querySelector(".h3-score")
+    h3Score.innerHTML = `Score: ${score}`;
+};
+
+const ajustMoney = () => {
+    player.money++;
+    let h3Name = document.querySelector(".h3-name")
+    h3Name
 }
 
 const endGame = () => {
     saveMaxScore();
-    pushMaxScore();
     swal({
         title: `Game Over!!`,
         text: `You Rock It!! ${player.usernameLogIn}.
@@ -697,6 +703,7 @@ const checkPosition = () => {
         food.y = Math.round(Math.random() * 47 + 1) * (10);
         drawFood();
         ajustScore();
+        ajustMoney();
     }
 }
 

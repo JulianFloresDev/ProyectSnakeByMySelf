@@ -6,7 +6,8 @@
         "startLenghtSnake": 3,
         "owner": false,
         "secondaryColor": "#D8DD4A",
-        "url": "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png"
+        "url": "./Multimedia/Imagenes/1-Snakes/DefaultSnake.png",
+        "price": 10
     }, {
         "id": 2,
         "name": "Black Manglar",
@@ -15,7 +16,8 @@
         "startLenghtSnake": 5,
         "owner": false,
         "secondaryColor": "#DCE85B",
-        "url": "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png"
+        "url": "./Multimedia/Imagenes/1-Snakes/BlackManglarSnake.png",
+        "price": 10
     }, {
         "id": 3,
         "name": "Red Assasin",
@@ -24,7 +26,8 @@
         "startLenghtSnake": 10,
         "owner": false,
         "secondaryColor": "#CF4C05",
-        "url": "./Multimedia/Imagenes/1-Snakes/RedPiton.png"
+        "url": "./Multimedia/Imagenes/1-Snakes/RedPiton.png",
+        "price": 10
     }, {
         "id": 4,
         "name": "Blue Piton",
@@ -33,7 +36,8 @@
         "startLenghtSnake": 5,
         "owner": false,
         "secondaryColor": "#0F0E0E",
-        "url": "./Multimedia/Imagenes/1-Snakes/BluePiton.png"
+        "url": "./Multimedia/Imagenes/1-Snakes/BluePiton.png",
+        "price": 10
     },
     {
         "id": 5,
@@ -43,6 +47,7 @@
         "startLenghtSnake": 6,
         "owner": false,
         "secondaryColor": "#5c523f",
-        "url": "./Multimedia/Imagenes/1-Snakes/GreyCobra.png"
+        "url": "./Multimedia/Imagenes/1-Snakes/GreyCobra.png",
+        "price": 10
     }
 ]

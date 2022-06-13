@@ -36,74 +36,78 @@
 
         </nav>
     </header>
-    <div class="conteiner-sesionStart">
-        <div class="sesionStart">
-            <label for="usernameInput" class="login login-labels">Username:</label>
-            <input id="usernameInput" type="text" class="login login-inputs" placeholder="Nickname or email">
+    <div class="conteiner-all">
+        <div class="conteiner-sesionStart">
+            <div class="sesionStart">
+                <label for="usernameInput" class="login login-labels">Username:</label>
+                <input id="usernameInput" type="text" class="login login-inputs" placeholder="Nickname or email">
 
-            <label for="passwordInput" class="login login-labels">Password:</label>
-            <input id="passwordInput" type="password" class="login login-inputs" placeholder="Numbers and letters only">
+                <label for="passwordInput" class="login login-labels">Password:</label>
+                <input id="passwordInput" type="password" class="login login-inputs" placeholder="Numbers and letters only">
 
-            <div class="check-conteiner">
+                <div class="check-conteiner">
 
-                <input id="checkbox-remember" type="checkbox" class="login checkbox">
+                    <input id="checkbox-remember" type="checkbox" class="login checkbox">
 
-                <label for="checkbox-remember" class="login login-labels label-remember">Remember</label>
+                    <label for="checkbox-remember" class="login login-labels label-remember">Remember</label>
+
+                </div>
+
+                <div class="invalid"></div>
+
+                <input id="login-button" type="button" value="Start Play" class="login btn btn-startGame">
+
+                <div class="conteiner-singUp">
+                    <button class="btn btn-singUp">Sing Up</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="conteinerSnakes-display-none selectSnake-conteiner">
+            <div class="select-cards-conteiner cards-conteiner">
 
             </div>
 
-            <div class="invalid"></div>
-
-            <input id="login-button" type="button" value="Start Play" class="login btn btn-startGame">
-
-            <div class="conteiner-singUp">
-                <button class="btn btn-singUp">Sing Up</button>
+            <div class="button-conteiner">
+                <input id="selectSnake-button" type="button" value="Select Snake" class="btn btn-playWithSelected">
             </div>
         </div>
-    </div>
 
-    <div class="conteinerSnakes-display-none selectSnake-conteiner">
-        <div class="select-cards-conteiner cards-conteiner">
+        <div class="conteinerSnakes-display-none buySnake-conteiner">
+            <div class="buy-cards-conteiner cards-conteiner">
 
-        </div>
+            </div>
 
-        <div class="button-conteiner">
-            <input id="selectSnake-button" type="button" value="Select Snake" class="btn btn-playWithSelected">
-        </div>
-    </div>
-
-    <div class="conteinerSnakes-display-none buySnake-conteiner">
-        <div class="buy-cards-conteiner cards-conteiner">
-
-        </div>
-
-        <div class="button-conteiner">
-            <input id="buySnake-button" type="button" value="Buy Snake" class="btn btn-buySelected">
-        </div>
-    </div>
-
-    <div class="conteiner">
-        <div class="score" id="score">
-            <h3>Score: 0</h3>
-        </div>
-
-        <div class="game">
-            <div class="canvasGame" id="canvasGameScreen">
-                <canvas id="mainScreenPlay" width="500" height="500"></canvas>
+            <div class="button-conteiner">
+                <input id="buySnake-button" type="button" value="Buy Snake" class="btn btn-buySelected">
             </div>
         </div>
-    </div>
 
-    <div class="globalScore">
-        <table>
-            <tbody class="score-table">
-                <tr>
-                    <th>N°</th>
-                    <th>Player</th>
-                    <th>Score</th>
-                </tr>
-            </tbody>
-        </table>
+        <div class="conteiner">
+            <div class="score" id="score">
+                <h3 class="h3-name">Player</h3>
+                <h3 class="h3-score">Score: 0</h3>
+                <h3 class="h3-coins">Coins:</h3>
+            </div>
+
+            <div class="game">
+                <div class="canvasGame" id="canvasGameScreen">
+                    <canvas id="mainScreenPlay" width="500" height="500"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="globalScore">
+            <table>
+                <tbody class="score-table">
+                    <tr>
+                        <th>N°</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <!-- SweetAlert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
