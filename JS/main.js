@@ -4,7 +4,7 @@
 const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     gameConteiner = document.querySelector(".conteiner"),
-    
+
     h3Score = document.querySelector(".h3-score"),
 
     h3Name = document.querySelector(".h3-name"),
@@ -42,6 +42,8 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
     inputUsername = document.querySelector("#usernameInput"),
 
     inputPassword = document.querySelector("#passwordInput"),
+
+    btnHome = document.querySelectorAll(".btn-home"),
 
     selectSnakeConteiner = document.querySelector(".selectSnake-conteiner"),
 
@@ -129,7 +131,7 @@ const saveNewData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
 };
 
-const saveDB = () =>{
+const saveDB = () => {
     //Elimino la base de datos antigua y la sobre escribo con la actualizada.
     localStorage.removeItem("usersDataBase");
     saveNewData("usersDataBase", usersDataBase);
@@ -183,6 +185,7 @@ const InputVerification = (user, password) => {
     const checkedBtn = () => {
         if (checkBtn.checked) {
             //Guardamos los datos del usuario dentro del Objeto userSingIn y luego en el SesionStorage, para volver a ingresar en el momento.
+            userSingIn.pop();
             userSingIn.push(player);
             sessionStorage.clear();
             sessionStorage.setItem("userSingIn", JSON.stringify(userSingIn));
@@ -272,6 +275,11 @@ scoreBtn.addEventListener("click", () => {
 //                           Seleccion de la serpiente a utilizar!
 //__________________________________________________________________________________________________________________________________________//
 
+btnHome.forEach(element => {
+    element.addEventListener("click", () => {
+        displayGame();
+    })
+})
 //Boton para iniciar la partida cuando se selecciona una snake.
 playWithSelectedBtn.addEventListener("click", () => {
 
@@ -355,8 +363,25 @@ buySelectedBtn.addEventListener("click", () => {
     const target = document.getElementsByClassName("card-clicked");
 
     if (snakeColecction[target[0].id - 1].price <= player.money) {
-        (player.snakeColecction.some(element => element.id == target[0].id)) ? displayGame(): player.snakeColecction.push(snakeColecction[target[0].id - 1]);
         player.money -= snakeColecction[target[0].id - 1].price;
+
+        (!player.snakeColecction.some(element => element.id == target[0].id)) && player.snakeColecction.push(snakeColecction[target[0].id - 1]);
+
+        swal({
+                title: "Are you sure??",
+                text: `You are about to spend ${snakeColecction[target[0].id - 1].price} Coins in ${snakeColecction[target[0].id - 1].name}`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                (willDelete) ? swal(`Excelent!! Check your's Snakes for look up your new Snake`, {
+                    icon: "success"
+                }): swal("Operation canceled!!");
+            });
+
+
+
     } else {
         swal({
             title: 'Insuficient money',
@@ -365,8 +390,6 @@ buySelectedBtn.addEventListener("click", () => {
             icon: 'warning',
         });
     }
-
-    displayGame();
 })
 
 //Marketplace
@@ -381,7 +404,6 @@ buySnakeBtn.addEventListener("click", () => {
 
     //Definir un array separado de lacoleccion total y no pintgar las que coincidan con las que ya tiene
     let missingsCards = [];
-    console.log(missingsCards);
 
     snakeColecction.forEach(element => {
 
@@ -434,7 +456,6 @@ buySnakeBtn.addEventListener("click", () => {
             });
 
             crd.classList.add("card-clicked");
-            console.log(crd.id);
         })
     })
 });
@@ -449,8 +470,8 @@ function startGame(playername) {
     food.x = Math.round(Math.random() * 47 + 1) * (10);
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
-    (!usersDataBase.some(element => element.usernameLogIn == playername)) && (snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]); //En caso de que no sea un usuario registrado se selecciona una serpiente aleatoria dentro de las serpientes de la base de datos; y sino se selecciona la serpiente por Default.
-    // snakeChoice = player.snakeColecction[0];
+    //En caso de que no sea un usuario registrado se selecciona una serpiente aleatoria dentro de las serpientes de la base de datos; y sino se selecciona la serpiente por Default.
+    (!usersDataBase.some(element => element.usernameLogIn == playername)) ? (snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]) : snakeChoice = player.snakeColecction[0];
 
     clearCanva();
     if (bodySnake.length > 0) {
@@ -665,7 +686,7 @@ const ajustData = () => {
     h3Score.innerHTML = `Score: ${score}`;
 };
 
-const ajustMoney = () =>{
+const ajustMoney = () => {
     player.money++;
     playerData();
 
@@ -688,7 +709,7 @@ const endGame = () => {
 
                 Max Score: ${player.maxScore}.
 
-                Press 'Esc' to send your Score to the Global's usersDataBase.
+                Press 'Esc' to send your Score to the Global's Scores.
 
                 Press 'Enter' to play again. Good Luck!`,
         icon: "error",
@@ -699,7 +720,7 @@ const endGame = () => {
     drawInstructions();
     clearInterval(gameInterval);
 
-    scoreDiv.innerHTML = `<h3>Score: 0</h3>`
+    h3Score.innerHTML = `Score: 0`
 }
 
 const checkPosition = () => {

@@ -127,7 +127,7 @@ nav ul li {
     display: none;
     align-items: center;
     flex-direction: column;
-
+    margin: auto;
     margin-top: 40px;
 }
 
@@ -195,6 +195,7 @@ nav ul li {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
 
 }
 
@@ -230,7 +231,8 @@ nav ul li {
     border: 4px double #000;
     width: 28%;
     margin-top: flex;
-    margin-left: 2%;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
@@ -258,19 +260,34 @@ td th {
     flex-direction: column;
 
     background: #81B437;
-    width: auto;
+    width: 95%;
     height: auto;
     border: 2px solid #464A44;
     border-radius: 20px;
     margin-top: 5%;
-
     margin-left: auto;
     margin-right: auto;
+
     justify-content: center;
     align-items: center;
 
     background: linear-gradient(180deg, #329419 22.05%, #5e7758 100%);
 }
+
+.home-conteiner {
+    padding: 0.35%;
+    background: linear-gradient(270deg, #a9ca7800 0%, #C4EF86 100%);
+    border-radius: 10px;
+    width: 98%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 1%;
+}
+
+
 
 .cards-conteiner {
     display: flex;
@@ -352,7 +369,8 @@ td th {
 }
 
 #selectSnake-button,
-#buySnake-button {
+#buySnake-button,
+.btn-home {
     display: flex;
     margin: 0%;
 }
