@@ -4,6 +4,12 @@
 const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
     gameConteiner = document.querySelector(".conteiner"),
+    
+    h3Score = document.querySelector(".h3-score"),
+
+    h3Name = document.querySelector(".h3-name"),
+
+    h3Coins = document.querySelector(".h3-coins"),
 
     selectSnakeBtn = document.querySelector(".btn-selectSnake"),
 
@@ -121,6 +127,12 @@ snakeChoice = player.snakeColecction[Math.round(Math.random() * (snakeColecction
 
 const saveNewData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
+};
+
+const saveDB = () =>{
+    //Elimino la base de datos antigua y la sobre escribo con la actualizada.
+    localStorage.removeItem("usersDataBase");
+    saveNewData("usersDataBase", usersDataBase);
 }
 
 let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
@@ -196,6 +208,7 @@ const InputVerification = (user, password) => {
             } else {
                 player = userExist;
                 checkedBtn();
+                playerData();
                 displayGame();
             }
         } else {
@@ -211,8 +224,7 @@ const InputVerification = (user, password) => {
 
         //Guardamos los datos del usuario dentro del Array de usuarios válidos para ingresar del LocalStorage.
         usersDataBase.push(player);
-        localStorage.removeItem("usersDataBase");
-        saveNewData("usersDataBase", usersDataBase);
+        saveDB();
 
         checkedBtn();
         displayGame();
@@ -614,9 +626,7 @@ const saveMaxScore = () => {
             //Acomodo la base de datos según los scores máximos.
             usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
 
-            //Elimino la base de datos antigua y la sobre escribo con la actualizada.
-            localStorage.removeItem("usersDataBase");
-            saveNewData("usersDataBase", usersDataBase);
+            saveDB();
 
             pushMaxScore();
         };
@@ -650,20 +660,26 @@ const pushMaxScore = () => {
 };
 pushMaxScore();
 
-const ajustScore = () => {
+const ajustData = () => {
     score++;
-    let h3Score = document.querySelector(".h3-score")
     h3Score.innerHTML = `Score: ${score}`;
 };
 
-const ajustMoney = () => {
+const ajustMoney = () =>{
     player.money++;
-    let h3Name = document.querySelector(".h3-name")
-    h3Name
+    playerData();
+
+}
+const playerData = () => {
+
+    h3Name.innerHTML = `${player.usernameLogIn}`;
+    h3Coins.innerHTML = `Coins: ${player.money}`;
 }
 
 const endGame = () => {
     saveMaxScore();
+    saveDB();
+
     swal({
         title: `Game Over!!`,
         text: `You Rock It!! ${player.usernameLogIn}.
@@ -702,7 +718,7 @@ const checkPosition = () => {
         food.x = Math.round(Math.random() * 47 + 1) * (10);
         food.y = Math.round(Math.random() * 47 + 1) * (10);
         drawFood();
-        ajustScore();
+        ajustData();
         ajustMoney();
     }
 }
