@@ -3,6 +3,8 @@
 
 const headerElementsBtn = document.querySelectorAll(".headerElements"),
 
+    loginDiv = document.querySelectorAll(".btn-login"),
+
     gameConteiner = document.querySelector(".conteiner"),
 
     h3Score = document.querySelector(".h3-score"),
@@ -10,6 +12,8 @@ const headerElementsBtn = document.querySelectorAll(".headerElements"),
     h3Name = document.querySelector(".h3-name"),
 
     h3Coins = document.querySelector(".h3-coins"),
+
+    userDataHeader = document.querySelector(".user-data-header"),
 
     selectSnakeBtn = document.querySelector(".btn-selectSnake"),
 
@@ -219,7 +223,6 @@ const InputVerification = (user, password) => {
                 snakeChoice = player.snakeColecction[0];
 
                 checkedBtn();
-                playerData();
                 displayGame();
             }
         } else {
@@ -253,8 +256,8 @@ logOutBtn.addEventListener("click", () => {
     scoreBtn.style.display = "flex";
     logOutBtn.style.display = "none";
     enterGameBtn.style.display = "flex";
-    h3Name.style.display = 'none';
-    h3Coins.style.display = 'none';
+    userDataHeader.style.display = 'none';
+
 
 
     player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, null, 0);
@@ -337,10 +340,10 @@ selectSnakeBtn.addEventListener("click", () => {
         
             <div class="card-header">
                 <div class="card-title">
-                        <h2>${name}</h2>
+                    <h2>${name}</h2>
                 </div>
                 <div class="snake-img">
-                    <img src=${url} alt="">
+                    <img src=${url} alt="${name}">
                 </div>
             </div>
         
@@ -349,13 +352,11 @@ selectSnakeBtn.addEventListener("click", () => {
                     <div class="card-title atributes-title">
                         <h3>Speed: ${speed}</h3>
                     </div>
-                    <div class="cubos"></div>
                 </div>
                 <div class="rows lenght">
                     <div class="card-title atributes-title">
                         <h3>Lenght: ${startLenghtSnake}</h3>
                     </div>
-                    <div class="cubos"></div>
                 </div>
             </div>
         </div>`
@@ -382,9 +383,6 @@ buySelectedBtn.addEventListener("click", () => {
     const target = document.getElementsByClassName("card-clicked");
 
     if (snakeColecction[target[0].id - 1].price <= player.money) {
-        player.money -= snakeColecction[target[0].id - 1].price;
-
-        (!player.snakeColecction.some(element => element.id == target[0].id)) && player.snakeColecction.push(snakeColecction[target[0].id - 1]);
 
         swal({
                 title: "Are you sure??",
@@ -394,9 +392,21 @@ buySelectedBtn.addEventListener("click", () => {
                 dangerMode: true,
             })
             .then((willDelete) => {
-                (willDelete) ? swal(`Excelent!! Check your's Snakes for look up your new Snake`, {
-                    icon: "success"
-                }): swal("Operation canceled!!");
+                if (willDelete) {
+                    //si la promesa se resuelve con true, le descuento de su cantidad de monedas el valor de la serpiente.
+                    player.money -= snakeColecction[target[0].id - 1].price;
+
+                    //error
+                    (!player.snakeColecction.some(element => element.id == target[0].id)) && player.snakeColecction.push(snakeColecction[target[0].id - 1]);
+
+                    swal(`Excelent!! Check your's Snakes for look up your new Snake`, {
+                        icon: "success"
+                    });
+
+                    displayGame();
+                } else {
+                    swal("Operation canceled!!");
+                }
             });
 
 
@@ -431,7 +441,8 @@ buySnakeBtn.addEventListener("click", () => {
             speed,
             startLenghtSnake,
             url,
-            id
+            id,
+            price
         } = element;
 
         buyCardsConteiner.innerHTML += `
@@ -442,10 +453,11 @@ buySnakeBtn.addEventListener("click", () => {
         
             <div class="card-header">
                 <div class="card-title">
-                        <h2>${name}</h2>
+                    <span class="material-symbols-outlined">paid</span>
+                    <h3>${price} - ${name}</h3>
                 </div>
                 <div class="snake-img">
-                    <img src=${url} alt="">
+                    <img src=${url} alt="${name}">
                 </div>
             </div>
         
@@ -454,13 +466,11 @@ buySnakeBtn.addEventListener("click", () => {
                     <div class="card-title atributes-title">
                         <h3>Speed: ${speed}</h3>
                     </div>
-                    <div class="cubos"></div>
                 </div>
                 <div class="rows lenght">
                     <div class="card-title atributes-title">
                         <h3>Lenght: ${startLenghtSnake}</h3>
                     </div>
-                    <div class="cubos"></div>
                 </div>
             </div>
         </div>`
@@ -707,15 +717,15 @@ const ajustData = () => {
 
 const ajustMoney = () => {
     player.money++;
-    h3Coins.innerHTML = `Coins: ${player.money} <span class="material-symbols-outlined">paid</span>`;
+    h3Coins.innerHTML = `<h3>Coins: ${player.money}</h3> <span class="material-symbols-outlined">paid</span>`;
 
 }
 const playerData = () => {
-    h3Name.style.display = 'flex';
-    h3Name.innerHTML = `${player.usernameLogIn}`;
-    
-    h3Coins.style.display = 'flex';
-    h3Coins.innerHTML = `Coins: ${player.money} <span class="material-symbols-outlined">paid</span>`;
+    userDataHeader.style.display = 'flex';
+
+    h3Name.innerHTML = `<span class="material-symbols-outlined">person</span> <h3>${player.usernameLogIn}</h3>`;
+
+    h3Coins.innerHTML = `<h3>Coins: ${player.money}</h3> <span class="material-symbols-outlined">paid</span>`;
 }
 
 const endGame = () => {

@@ -72,6 +72,10 @@ header nav ul li a{
 }
 
 .material-symbols-outlined {
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
   font-variation-settings:
   'FILL' 0,
   'wght' 500,
@@ -126,8 +130,30 @@ header nav ul li a{
 }
 
 .btn-login {
+    display: flex;
+    flex-direction: row;
     margin-left: auto;
     margin-right: 0.5%;
+}
+
+.user-data-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.user-data{
+    display: flex;
+    flex-direction: row;
+}
+.h3-name{
+    margin-right: 5px;
+}
+.h3-coins{
+    margin-left: 5px;
 }
 
 .btn-login-rigth {
@@ -355,6 +381,8 @@ td th {
 }
 
 .card-title {
+    display: flex;
+    flex-direction: row;
     margin: 10px 0px;
 }
 
