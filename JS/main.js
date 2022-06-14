@@ -350,7 +350,7 @@ selectSnakeBtn.addEventListener("click", () => {
             <div class="atributes">
                 <div class="rows speed">
                     <div class="card-title atributes-title">
-                        <h3>Speed: ${speed}</h3>
+                        <h3>Speed: ${140 - speed} km/h</h3>
                     </div>
                 </div>
                 <div class="rows lenght">
@@ -464,7 +464,7 @@ buySnakeBtn.addEventListener("click", () => {
             <div class="atributes">
                 <div class="rows speed">
                     <div class="card-title atributes-title">
-                        <h3>Speed: ${speed}</h3>
+                        <h3>Speed: ${140 - speed} km/h</h3>
                     </div>
                 </div>
                 <div class="rows lenght">
