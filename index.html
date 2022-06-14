@@ -52,11 +52,10 @@
         <div class="conteiner-sesionStart">
             <div class="sesionStart">
                 <label for="usernameInput" class="login login-labels">Username:</label>
-                <input id="usernameInput" type="text" class="login login-inputs" placeholder="Nickname or email">
+                <input id="usernameInput" type="text" class="login login-inputs" pattern="[A-Za-z]" minlength="3" maxlength="15" placeholder="Nickname or email">
 
                 <label for="passwordInput" class="login login-labels">Password:</label>
-                <input id="passwordInput" type="password" class="login login-inputs"
-                    placeholder="Numbers and letters only">
+                <input id="passwordInput" type="password" class="login login-inputs" pattern="[A-Za-z]" minlength="3" maxlength="15" placeholder="Numbers and letters only">
 
                 <div class="check-conteiner">
 
@@ -68,7 +67,7 @@
 
                 <div class="invalid"></div>
 
-                <input id="login-button" type="button" value="Start Play" class="login btn btn-startGame">
+                <input id="login-button" type="submit" value="Start Play" class="login btn btn-startGame">
 
                 <div class="conteiner-singUp">
                     <button class="btn btn-singUp">Sing Up</button>

@@ -145,8 +145,8 @@ let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
 let userSingIn = JSON.parse(sessionStorage.getItem("userSingIn")) || [];
 
 const displayGame = () => {
-    sesionStartOptions.style.display = "none";
     enterGameBtn.style.display = "none";
+    sesionStartOptions.style.display = "none";
     selectSnakeConteiner.style.display = "none";
     buySnakeConteiner.style.display = "none";
 
@@ -405,6 +405,7 @@ buySelectedBtn.addEventListener("click", () => {
                         icon: "success"
                     });
 
+                    snakeChoice = snakeColecction[target[0].id - 1];
                     displayGame();
                 } else {
                     swal("Operation canceled!!");
@@ -730,6 +731,10 @@ const playerData = () => {
 const endGame = () => {
     saveMaxScore();
 
+    clearCanva();
+    drawInstructions();
+    clearInterval(gameInterval);
+
     swal({
         title: `Game Over!!`,
         text: `You Rock It!! ${player.usernameLogIn}.
@@ -742,14 +747,13 @@ const endGame = () => {
 
                 Press 'Enter' to play again. Good Luck!`,
         icon: "error",
-        timer: 3500,
-        button: false,
+        buttons: true,
+    })
+    .then((willDelete)=>{
+        (willDelete) ? startGame(player.usernameLogIn) : clearCanva(), drawInstructions(), clearInterval(gameInterval);
     });
-    clearCanva();
-    drawInstructions();
-    clearInterval(gameInterval);
 
-    h3Score.innerHTML = `Score: 0`
+    h3Score.innerHTML = `Score: 0`;
 }
 
 const checkPosition = () => {
