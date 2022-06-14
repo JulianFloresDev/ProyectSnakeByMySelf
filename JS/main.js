@@ -247,8 +247,9 @@ const InputVerification = (user, password) => {
 }
 
 logOutBtn.addEventListener("click", () => {
-
+    saveDB();
     displayGame();
+
     headerElementsBtn.forEach(element => {
         //Cada elemento del Header oculto se muestra con display "inline-block"
         element.style.display = "none";
@@ -265,7 +266,7 @@ logOutBtn.addEventListener("click", () => {
     inputUsername.value = "";
     inputPassword.value = "";
     startPlayBtn.value = 'Start Play';
-
+    
     clearCanva();
     drawInstructions();
 });
@@ -350,7 +351,7 @@ selectSnakeBtn.addEventListener("click", () => {
             <div class="atributes">
                 <div class="rows speed">
                     <div class="card-title atributes-title">
-                        <h3>Speed: ${140 - speed} km/h</h3>
+                        <h3>Speed: ${Math.round((160 - speed)/5.5)} km/h</h3>
                     </div>
                 </div>
                 <div class="rows lenght">
@@ -395,6 +396,7 @@ buySelectedBtn.addEventListener("click", () => {
                 if (willDelete) {
                     //si la promesa se resuelve con true, le descuento de su cantidad de monedas el valor de la serpiente.
                     player.money -= snakeColecction[target[0].id - 1].price;
+                    saveDB();
 
                     //error
                     (!player.snakeColecction.some(element => element.id == target[0].id)) && player.snakeColecction.push(snakeColecction[target[0].id - 1]);
@@ -464,7 +466,7 @@ buySnakeBtn.addEventListener("click", () => {
             <div class="atributes">
                 <div class="rows speed">
                     <div class="card-title atributes-title">
-                        <h3>Speed: ${140 - speed} km/h</h3>
+                        <h3>Speed: ${Math.round((160 - speed)/5.5)} km/h</h3>
                     </div>
                 </div>
                 <div class="rows lenght">
@@ -678,7 +680,6 @@ const saveMaxScore = () => {
 
             saveDB();
 
-            pushMaxScore();
         };
     }
 }
@@ -730,7 +731,6 @@ const playerData = () => {
 
 const endGame = () => {
     saveMaxScore();
-    saveDB();
 
     swal({
         title: `Game Over!!`,
