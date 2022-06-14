@@ -62,6 +62,23 @@ nav ul li {
     justify-content: center;
     align-items: center;
 }
+header nav ul li a{
+    display: flex;
+    flex-direction: row;
+}
+.icon{
+    margin: 0px auto;
+    margin-right: 10px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 500,
+  'GRAD' 0,
+  'opsz' 20
+}
+
 
 .btn {
     justify-content: center;
@@ -78,7 +95,7 @@ nav ul li {
     color: #131412;
     letter-spacing: 2px;
 
-    width: 180px;
+    width: 140px;
     margin: 15px;
     padding: 3px;
 }
@@ -102,7 +119,6 @@ nav ul li {
     border-color: #464A44;
 
     display: none;
-    /* Los botones de funcionalidad para usuarios registrados quedan ocultos */
 }
 
 .btn-showScore {
@@ -111,8 +127,7 @@ nav ul li {
 
 .btn-login {
     margin-left: auto;
-
-    right: 1%;
+    margin-right: 0.5%;
 }
 
 .btn-login-rigth {

@@ -155,6 +155,8 @@ const displayGame = () => {
     });
     scoreBtn.style.display = "flex";
 
+    (usersDataBase.some(user => user.usernameLogIn == player.usernameLogIn)) && playerData();
+
     clearInterval(gameInterval);
     clearCanva();
     drawInstructions();
@@ -496,7 +498,7 @@ function startGame(playername) {
         }
     }
 
-    // clearInterval(gameInterval);
+    clearInterval(gameInterval);
     gameInterval = setInterval(gameLoop, snakeChoice.speed);
 
     bodySnake.unshift(new SnakeCell((snakeChoice.startLenghtSnake * 10), 10, movement.RIGHT));
@@ -703,7 +705,7 @@ const ajustData = () => {
 
 const ajustMoney = () => {
     player.money++;
-    h3Coins.innerHTML = `Coins: ${player.money}`;
+    h3Coins.innerHTML = `Coins: ${player.money} <span class="material-symbols-outlined">paid</span>`;
 
 }
 const playerData = () => {
@@ -711,7 +713,7 @@ const playerData = () => {
     h3Name.innerHTML = `${player.usernameLogIn}`;
     
     h3Coins.style.display = 'flex';
-    h3Coins.innerHTML = `Coins: ${player.money}`;
+    h3Coins.innerHTML = `Coins: ${player.money} <span class="material-symbols-outlined">paid</span>`;
 }
 
 const endGame = () => {
