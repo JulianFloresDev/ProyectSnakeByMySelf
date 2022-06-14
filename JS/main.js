@@ -155,6 +155,7 @@ const displayGame = () => {
     });
     scoreBtn.style.display = "flex";
 
+    clearInterval(gameInterval);
     clearCanva();
     drawInstructions();
 }
@@ -173,6 +174,9 @@ enterGameBtn.addEventListener("click", () => {
         inputUsername.value = userSingIn[0].usernameLogIn;
         inputPassword.value = userSingIn[0].passwordLogIn;
     }
+
+    enterGameBtn.style.display = 'none';
+    logOutBtn.style.display = 'flex';
 });
 
 startPlayBtn.addEventListener("click", () => {
@@ -210,6 +214,8 @@ const InputVerification = (user, password) => {
             </p>`;
             } else {
                 player = userExist;
+                snakeChoice = player.snakeColecction[0];
+
                 checkedBtn();
                 playerData();
                 displayGame();
@@ -224,6 +230,7 @@ const InputVerification = (user, password) => {
     } else { //Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
 
         player = new Player(user, password, null, [snakeColecction[0]], 0, 0);
+        snakeChoice = player.snakeColecction[0];
 
         //Guardamos los datos del usuario dentro del Array de usuarios válidos para ingresar del LocalStorage.
         usersDataBase.push(player);
@@ -282,6 +289,17 @@ btnHome.forEach(element => {
 })
 //Boton para iniciar la partida cuando se selecciona una snake.
 playWithSelectedBtn.addEventListener("click", () => {
+    const cards = [...document.querySelectorAll(".card")];
+
+    for (let crd of cards) {
+
+        if (crd.classList.contains("card-clicked")) {
+            snakeChoice = snakeColecction[crd.id];
+            break;
+        } else {
+            snakeChoice = player.snakeColecction[0];
+        }
+    };
 
     displayGame();
 });
@@ -347,9 +365,6 @@ selectSnakeBtn.addEventListener("click", () => {
                 c.classList.remove("card-clicked");
             });
             crd.classList.add("card-clicked");
-
-            console.log(crd.id);
-            snakeChoice = snakeColecction[crd.id];
         })
     })
 });
@@ -471,7 +486,7 @@ function startGame(playername) {
     food.y = Math.round(Math.random() * 47 + 1) * (10);
 
     //En caso de que no sea un usuario registrado se selecciona una serpiente aleatoria dentro de las serpientes de la base de datos; y sino se selecciona la serpiente por Default.
-    (!usersDataBase.some(element => element.usernameLogIn == playername)) ? (snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]) : snakeChoice = player.snakeColecction[0];
+    (!usersDataBase.some(element => element.usernameLogIn == playername)) && (snakeChoice = player.snakeColecction[Math.round(Math.random() * (player.snakeColecction.length - 1))]);
 
     clearCanva();
     if (bodySnake.length > 0) {
@@ -481,7 +496,7 @@ function startGame(playername) {
         }
     }
 
-    clearInterval(gameInterval);
+    // clearInterval(gameInterval);
     gameInterval = setInterval(gameLoop, snakeChoice.speed);
 
     bodySnake.unshift(new SnakeCell((snakeChoice.startLenghtSnake * 10), 10, movement.RIGHT));
@@ -688,12 +703,14 @@ const ajustData = () => {
 
 const ajustMoney = () => {
     player.money++;
-    playerData();
+    h3Coins.innerHTML = `Coins: ${player.money}`;
 
 }
 const playerData = () => {
-
+    h3Name.style.display = 'flex';
     h3Name.innerHTML = `${player.usernameLogIn}`;
+    
+    h3Coins.style.display = 'flex';
     h3Coins.innerHTML = `Coins: ${player.money}`;
 }
 
