@@ -266,7 +266,7 @@ logOutBtn.addEventListener("click", () => {
     inputUsername.value = "";
     inputPassword.value = "";
     startPlayBtn.value = 'Start Play';
-    
+
     clearCanva();
     drawInstructions();
 });
@@ -433,9 +433,7 @@ buySnakeBtn.addEventListener("click", () => {
 
     buyCardsConteiner.innerHTML = '';
 
-    //Definir un array separado de lacoleccion total y no pintgar las que coincidan con las que ya tiene
-    let missingsCards = [];
-
+    //error
     snakeColecction.forEach(element => {
 
         let {
@@ -447,35 +445,37 @@ buySnakeBtn.addEventListener("click", () => {
             price
         } = element;
 
-        buyCardsConteiner.innerHTML += `
-        <div class="card" id="${id}">
-            <div class="img-value">
+        if (!player.snakeColecction.some(snake => snake.id == element.id)) {
+            buyCardsConteiner.innerHTML += `
+            <div class="card" id="${id}">
+                <div class="img-value">
+                
+                </div>            
             
-            </div>            
-        
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="material-symbols-outlined">paid</span>
-                    <h3>${price} - ${name}</h3>
-                </div>
-                <div class="snake-img">
-                    <img src=${url} alt="${name}">
-                </div>
-            </div>
-        
-            <div class="atributes">
-                <div class="rows speed">
-                    <div class="card-title atributes-title">
-                        <h3>Speed: ${Math.round((160 - speed)/5.5)} km/h</h3>
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="material-symbols-outlined">paid</span>
+                        <h3>${price} - ${name}</h3>
+                    </div>
+                    <div class="snake-img">
+                        <img src=${url} alt="${name}">
                     </div>
                 </div>
-                <div class="rows lenght">
-                    <div class="card-title atributes-title">
-                        <h3>Lenght: ${startLenghtSnake}</h3>
+            
+                <div class="atributes">
+                    <div class="rows speed">
+                        <div class="card-title atributes-title">
+                            <h3>Speed: ${Math.round((160 - speed)/5.5)} km/h</h3>
+                        </div>
+                    </div>
+                    <div class="rows lenght">
+                        <div class="card-title atributes-title">
+                            <h3>Lenght: ${startLenghtSnake}</h3>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>`
+            </div>`
+        }
     });
 
     const cards = document.querySelectorAll(".card");
