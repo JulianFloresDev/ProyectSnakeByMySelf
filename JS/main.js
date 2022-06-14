@@ -416,7 +416,7 @@ buySelectedBtn.addEventListener("click", () => {
     } else {
         swal({
             title: 'Insuficient money',
-            text: `Try to play some matchs and earn more money
+            text: `Try to play again and earn more money
             It's easy: 1 point = 1 coin`,
             icon: 'warning',
         });
@@ -433,7 +433,6 @@ buySnakeBtn.addEventListener("click", () => {
 
     buyCardsConteiner.innerHTML = '';
 
-    //error
     snakeColecction.forEach(element => {
 
         let {
@@ -717,8 +716,7 @@ const ajustData = () => {
 };
 
 const ajustMoney = () => {
-    player.money++;
-    h3Coins.innerHTML = `<h3>Coins: ${player.money}</h3> <span class="material-symbols-outlined">paid</span>`;
+    (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) && (player.money++, h3Coins.innerHTML = `<h3>Coins: ${player.money}</h3> <span class="material-symbols-outlined">paid</span>`);
 
 }
 const playerData = () => {
