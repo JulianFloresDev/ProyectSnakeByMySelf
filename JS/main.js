@@ -138,7 +138,7 @@ const saveDB = () => {
 }
 
 let usersDataBase = JSON.parse(localStorage.getItem("usersDataBase")) || [];
-let userSingIn = JSON.parse(sessionStorage.getItem("userSingIn")) || []; //logout debería borrar este dato?
+let userSingIn = JSON.parse(sessionStorage.getItem("userSingIn")) || [];
 
 const displayGame = () => {
     sesionStartOptions.style.display = "none";
@@ -253,7 +253,9 @@ logOutBtn.addEventListener("click", () => {
     scoreBtn.style.display = "flex";
     logOutBtn.style.display = "none";
     enterGameBtn.style.display = "flex";
-    //Limpiar los valores ingresados para solamente guardarlos en caso de que el usuario lo pida
+    h3Name.style.display = 'none';
+    h3Coins.style.display = 'none';
+
 
     player = new Player(`Player #${Math.round(Math.random()*100 + 1)}`, undefined, null, snakeColecction, null, 0);
 
