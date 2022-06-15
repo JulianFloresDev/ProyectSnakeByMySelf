@@ -1,0 +1,25 @@
+{
+  "name": "proyectsnake",
+  "version": "1.0.0",
+  "description": "proyect snake game whit only javascript, css and html elements",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crud",
+    "node",
+    "js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RuloDeMoebius/ProyectSnakeByMySelf.git"
+  },
+  "author": "Julian Flores",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RuloDeMoebius/ProyectSnakeByMySelf/issues"
+  },
+  "homepage": "https://github.com/RuloDeMoebius/ProyectSnakeByMySelf#readme"
+}

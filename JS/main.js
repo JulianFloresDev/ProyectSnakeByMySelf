@@ -123,6 +123,16 @@ const getDB = async () => {
     })
 };
 getDB();
+
+//Creación del CRUD
+const http = new XMLHttpRequest();
+
+http.open("GET","http://localhost:3000/snakes");
+http.send();
+http.onload = () =>{
+    const data = JSON.parse(http.response);
+    console.log(data);
+}
 //__________________________________________________________________________________________________________________________________________//
 
 //                                       Inicio de Sesión y Registro del Usuario
@@ -186,7 +196,7 @@ enterGameBtn.addEventListener("click", () => {
 });
 
 startPlayBtn.addEventListener("click", () => {
-    InputVerification(inputUsername.value.toLowerCase(), inputPassword.value);
+    InputVerification(inputUsername.value, inputPassword.value);
 });
 
 const InputVerification = (user, password) => {
