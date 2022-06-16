@@ -67,7 +67,9 @@ let score = 0;
 
 const bodySnake = [],
 
-    snakeColecction = [];
+    snakeColecction = [],
+
+    players = [];
 
 class Player {
     constructor(usernameLogIn, passwordLogIn, cardRegistered, snakeColecction, maxScore, money) {
@@ -124,15 +126,14 @@ const getDB = async () => {
 };
 getDB();
 
-//Creación del CRUD
-const http = new XMLHttpRequest();
+const getPlayers = async () => await fetch("http://localhost:3000/players").then((response) => response.json()); //? Defino una función asincróna para traer datos desde una base de datos local
 
-http.open("GET","http://localhost:3000/snakes");
-http.send();
-http.onload = () =>{
-    const data = JSON.parse(http.response);
-    console.log(data);
-}
+//* Para cada dato del array que traigo unserto ese objeto en un nuevo array llamado "players"
+getPlayers().then((dataFromDB) => {
+    dataFromDB.forEach(player => players.push(player))
+})
+
+console.log(players);
 //__________________________________________________________________________________________________________________________________________//
 
 //                                       Inicio de Sesión y Registro del Usuario
@@ -200,11 +201,11 @@ startPlayBtn.addEventListener("click", () => {
 });
 
 const InputVerification = (user, password) => {
-    divInvalid.innerHTML = ``; //Limpiamos el campo de ingresos inválidos.
+    divInvalid.innerHTML = ``; //*Limpiamos el campo de ingresos inválidos.
 
     const checkedBtn = () => {
         if (checkBtn.checked) {
-            //Guardamos los datos del usuario dentro del Objeto userSingIn y luego en el SesionStorage, para volver a ingresar en el momento.
+            //*Guardamos los datos del usuario dentro del Objeto userSingIn y luego en el SesionStorage, para volver a ingresar en el momento.
             userSingIn.pop();
             userSingIn.push(player);
             sessionStorage.clear();
@@ -218,9 +219,9 @@ const InputVerification = (user, password) => {
 
     } else if (startPlayBtn.value === 'Start Play') {
 
-        let userExist = usersDataBase.find(element => element.usernameLogIn === user); //Busco un usuario que coincida con la base de datos, si existe, ejecuto lo siguiente:
+        let userExist = usersDataBase.find(element => element.usernameLogIn === user); //! Busco un usuario que coincida con la base de datos, si existe, ejecuto lo siguiente:
 
-        if (userExist !== undefined) { //Accedo si se encontró un usuario con el find()
+        if (userExist !== undefined) { //! Accedo si se encontró un usuario con el find()
             let pass = userExist.passwordLogIn;
 
             if (pass != password) {
@@ -242,7 +243,7 @@ const InputVerification = (user, password) => {
             startPlayBtn.value = 'Sing Up';
 
         }
-    } else { //Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
+    } else { //! Accedo cuando el usuario debe REGISTRARSE POR PRIMERA VEZ.
 
         player = new Player(user, password, null, [snakeColecction[0]], 0, 0);
         snakeChoice = player.snakeColecction[0];
@@ -746,8 +747,8 @@ const endGame = () => {
     clearInterval(gameInterval);
 
     swal({
-        title: `Game Over!!`,
-        text: `You Rock It!! ${player.usernameLogIn}.
+            title: `Game Over!!`,
+            text: `You Rock It!! ${player.usernameLogIn}.
 
                 Score: ${score}.
 
@@ -756,12 +757,12 @@ const endGame = () => {
                 Press 'Esc' to send your Score to the Global's Scores.
 
                 Press 'Enter' to play again. Good Luck!`,
-        icon: "error",
-        buttons: true,
-    })
-    .then((willDelete)=>{
-        (willDelete) ? startGame(player.usernameLogIn) : clearCanva(), drawInstructions(), clearInterval(gameInterval);
-    });
+            icon: "error",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            (willDelete) ? startGame(player.usernameLogIn): clearCanva(), drawInstructions(), clearInterval(gameInterval);
+        });
 
     h3Score.innerHTML = `Score: 0`;
 }
