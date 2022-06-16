@@ -126,7 +126,9 @@ const getDB = async () => {
 };
 getDB();
 
-const getPlayers = async () => await fetch("http://localhost:3000/players").then((response) => response.json()); //? Defino una función asincróna para traer datos desde una base de datos local
+//__________________________________________________________________________________________________________________________________________//
+
+const getPlayers = async () => await fetch("http://localhost:3000/players").then((plyersArray) => plyersArray.json()); //? Defino una función asincróna para traer datos desde una base de datos local
 
 //* Para cada dato del array que traigo unserto ese objeto en un nuevo array llamado "players"
 getPlayers().then((dataFromDB) => {
@@ -709,6 +711,8 @@ const pushMaxScore = () => {
         </tr>`;
 
     let positionCount = 1;
+    
+    //? "players" Array tomado del LocalHost, para sustituir por usersDataBase.
 
     usersDataBase.forEach(element => {
 
