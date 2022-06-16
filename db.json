@@ -1,17 +1,17 @@
 {
     "players":[{
-        "usernameLogIn": "rulodemoebius",
+        "usernameLogIn": "PlayerOne",
         "passwordLogIn": "123",
         "cardRegistered": null,
-        "snakeColecction": "snakeColecction",
-        "maxScore": 0,
-        "money": 0
+        "snakeColecction": [],
+        "maxScore": 9999999,
+        "money": 10000000
     },
     {
         "usernameLogIn": "123",
         "passwordLogIn": "123",
         "cardRegistered": null,
-        "snakeColecction": "snakeColecction",
+        "snakeColecction": [],
         "maxScore": 0,
         "money": 0
     }]

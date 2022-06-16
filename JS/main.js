@@ -132,7 +132,12 @@ const getPlayers = async () => await fetch("http://localhost:3000/players").then
 
 //* Para cada dato del array que traigo unserto ese objeto en un nuevo array llamado "players"
 getPlayers().then((dataFromDB) => {
-    dataFromDB.forEach(player => players.push(player))
+//! error!
+    dataFromDB.forEach(player => {
+        player.snakeColecction.push(snakeColecction[0]);
+        players.push(player)
+    });
+
 })
 
 console.log(players);
@@ -692,6 +697,7 @@ const saveMaxScore = () => {
             usersDataBase.sort((a, b) => ((a.maxScore - b.maxScore) > 0) ? -1 : ((a.maxScore - b.maxScore) < 0) ? 1 : 0);
 
             saveDB();
+            pushMaxScore();
 
         };
     }
@@ -711,7 +717,7 @@ const pushMaxScore = () => {
         </tr>`;
 
     let positionCount = 1;
-    
+
     //? "players" Array tomado del LocalHost, para sustituir por usersDataBase.
 
     usersDataBase.forEach(element => {
