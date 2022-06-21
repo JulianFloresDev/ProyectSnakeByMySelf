@@ -637,9 +637,7 @@ const movementKey = (e) => {
     } else if (e.code === "ArrowRight" && bodySnake[0].vectorMov !== movement.LEFT) {
         bodySnake[0].vectorMov = movement.RIGHT;
     } else if (e.code === "Enter") {
-        if (gameConteiner.style.display != "none") {
-            startGame(player.usernameLogIn);
-        }
+        gameConteiner.style.display != "none" && startGame(player.usernameLogIn);
     } else if (e.code === "Escape") {
         (usersDataBase.some(element => element.usernameLogIn === player.usernameLogIn && element.passwordLogIn === player.passwordLogIn)) ? pushMaxScore(): swal({
             title: "Enter Game First",
